@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Management System | Professional Payroll + Leave</title>
+    <title>HR Management System | Payroll + Leave</title>
     <style>
         * {
             margin: 0;
@@ -20,8 +20,6 @@
             --danger-bg: #ffe5e5;
             --warning: #e85d04;
             --warning-bg: #fff3e0;
-            --info: #1b4332;
-            --info-bg: #e3f2fd;
             --background: #f5f7f5;
             --surface: #ffffff;
             --border: #e2e8f0;
@@ -41,14 +39,12 @@
             overflow: hidden;
         }
 
-        /* Layout */
         .app-layout {
             display: flex;
             height: 100vh;
             width: 100%;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 280px;
             background: var(--surface);
@@ -142,7 +138,6 @@
             color: var(--danger);
         }
 
-        /* Main Content */
         .main-content {
             flex: 1;
             margin-left: 280px;
@@ -150,7 +145,6 @@
             padding: 1.5rem;
         }
 
-        /* Auth Container */
         .auth-container {
             display: flex;
             align-items: center;
@@ -185,7 +179,6 @@
             font-size: 0.875rem;
         }
 
-        /* Buttons */
         .btn {
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
@@ -236,11 +229,6 @@
             color: var(--text-secondary);
         }
 
-        .btn-secondary:hover {
-            background-color: #e2e8f0;
-        }
-
-        /* Cards */
         .card {
             background: var(--surface);
             border-radius: 0.75rem;
@@ -271,7 +259,6 @@
             padding: 1.5rem;
         }
 
-        /* Forms */
         .form-group {
             margin-bottom: 1rem;
         }
@@ -315,7 +302,12 @@
             gap: 1rem;
         }
 
-        /* Tables */
+        .form-row-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+
         .table-wrapper {
             overflow-x: auto;
             max-height: 500px;
@@ -325,12 +317,12 @@
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
         }
 
         .data-table th {
             text-align: left;
-            padding: 0.75rem 0.75rem;
+            padding: 0.75rem 0.5rem;
             font-weight: 600;
             color: var(--text-muted);
             background-color: #f8fafc;
@@ -338,12 +330,12 @@
             top: 0;
             border-bottom: 2px solid var(--border);
             text-transform: uppercase;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             letter-spacing: 0.5px;
         }
 
         .data-table td {
-            padding: 0.75rem 0.75rem;
+            padding: 0.75rem 0.5rem;
             color: var(--text-secondary);
             border-bottom: 1px solid var(--border);
         }
@@ -352,22 +344,12 @@
             background-color: #f8fafc;
         }
 
-        .data-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
         .totals-row {
             background-color: var(--primary-bg);
             font-weight: 600;
             border-top: 2px solid var(--primary);
         }
 
-        .totals-row td {
-            color: var(--primary-dark);
-            font-weight: 600;
-        }
-
-        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -380,12 +362,6 @@
             border: 1px solid var(--border);
             border-radius: 0.75rem;
             padding: 1.25rem;
-            transition: all 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
         }
 
         .stat-card h3 {
@@ -403,7 +379,6 @@
             color: var(--primary);
         }
 
-        /* Badges */
         .badge {
             display: inline-flex;
             padding: 0.25rem 0.75rem;
@@ -417,7 +392,6 @@
         .badge-rejected { background: var(--danger-bg); color: var(--danger); }
         .badge-active { background: var(--primary-bg); color: var(--primary); }
 
-        /* Alerts */
         .alert {
             padding: 0.875rem 1rem;
             border-radius: 0.5rem;
@@ -450,7 +424,6 @@
             color: var(--warning);
         }
 
-        /* Tab Content */
         .tab-content {
             display: none;
         }
@@ -469,7 +442,6 @@
             display: none !important;
         }
 
-        /* Scrollbar */
         .main-content::-webkit-scrollbar {
             width: 6px;
         }
@@ -488,7 +460,7 @@
             .sidebar { width: 100%; height: auto; position: relative; }
             .main-content { margin-left: 0; }
             .app-layout { flex-direction: column; }
-            .form-row, .form-row-3 { grid-template-columns: 1fr; }
+            .form-row, .form-row-3, .form-row-4 { grid-template-columns: 1fr; }
             .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -497,9 +469,9 @@
     <div id="authContainer" class="auth-container">
         <div class="auth-card">
             <h1>HR Management System</h1>
-            <p>Professional Payroll & Leave Management</p>
+            <p>Professional Payroll and Leave Management</p>
             <button id="loginBtn" class="btn btn-primary" style="width: 100%; padding: 0.75rem; justify-content: center;">
-                🔐 Sign in with Google
+                Sign in with Google
             </button>
             <div id="errorMessage" style="margin-top: 1rem; font-size: 0.75rem; color: var(--danger);"></div>
         </div>
@@ -513,18 +485,16 @@
                     <p id="currentDate"></p>
                 </div>
                 <nav class="nav-menu">
-                    <button class="nav-item active" data-tab="dashboard">📊 Dashboard</button>
-                    <button class="nav-item" data-tab="employees">👥 Employees</button>
-                    <button class="nav-item" data-tab="attendance">⏱️ Attendance</button>
-                    <button class="nav-item" data-tab="leave-requests">📝 Leave Requests</button>
-                    <button class="nav-item" data-tab="leave-balance">⚖️ Leave Balance</button>
-                    <button class="nav-item" data-tab="payroll">💰 Payroll</button>
-                    <button class="nav-item" data-tab="logs">📜 Activity Logs</button>
+                    <button class="nav-item active" data-tab="dashboard">Dashboard</button>
+                    <button class="nav-item" data-tab="employees">Employees</button>
+                    <button class="nav-item" data-tab="attendance">Attendance</button>
+                    <button class="nav-item" data-tab="leave-requests">Leave Requests</button>
+                    <button class="nav-item" data-tab="leave-balance">Leave Balance</button>
+                    <button class="nav-item" data-tab="payroll">Payroll</button>
+                    <button class="nav-item" data-tab="logs">Activity Logs</button>
                 </nav>
                 <div class="sidebar-footer">
-                    <button id="logoutBtn" class="logout-btn">
-                        🚪 Logout
-                    </button>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
                 </div>
             </aside>
 
@@ -557,7 +527,7 @@
                 <!-- Employees Tab -->
                 <div id="employees" class="tab-content">
                     <div class="card">
-                        <div class="card-header"><h2>➕ Add New Employee</h2></div>
+                        <div class="card-header"><h2>Add New Employee</h2></div>
                         <div class="card-body">
                             <form id="employeeForm">
                                 <div class="form-row">
@@ -573,7 +543,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header"><h2>👥 Employee Directory</h2></div>
+                        <div class="card-header"><h2>Employee Directory</h2></div>
                         <div class="card-body">
                             <div class="table-wrapper" id="employeeListContainer"></div>
                         </div>
@@ -583,7 +553,7 @@
                 <!-- Attendance Tab -->
                 <div id="attendance" class="tab-content">
                     <div class="card">
-                        <div class="card-header"><h2>⏱️ Record Overtime / Late Hours</h2></div>
+                        <div class="card-header"><h2>Record Overtime / Late Hours</h2></div>
                         <div class="card-body">
                             <form id="attendanceForm">
                                 <div class="form-group"><label>Select Employee</label><select id="attendanceEmployee" required></select></div>
@@ -607,7 +577,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header"><h2>📋 Current Month Records</h2></div>
+                        <div class="card-header"><h2>Current Month Records</h2></div>
                         <div class="card-body">
                             <div class="table-wrapper" id="attendanceRecordsContainer"></div>
                         </div>
@@ -617,16 +587,16 @@
                 <!-- Leave Requests Tab -->
                 <div id="leave-requests" class="tab-content">
                     <div class="card">
-                        <div class="card-header"><h2>📝 Submit Leave Request</h2></div>
+                        <div class="card-header"><h2>Submit Leave Request</h2></div>
                         <div class="card-body">
                             <form id="leaveForm">
                                 <div class="form-group"><label>Select Employee</label><select id="leaveEmployee" required></select></div>
                                 <div class="form-row">
                                     <div class="form-group"><label>Leave Type</label>
                                         <select id="leaveType">
-                                            <option value="Casual">🏖️ Casual Leave</option>
-                                            <option value="Sick">🤒 Sick Leave</option>
-                                            <option value="Earned">⭐ Earned Leave</option>
+                                            <option value="Casual">Casual Leave</option>
+                                            <option value="Sick">Sick Leave</option>
+                                            <option value="Earned">Earned Leave</option>
                                         </select>
                                     </div>
                                     <div class="form-group"><label>Start Date</label><input type="date" id="leaveStart" required></div>
@@ -644,7 +614,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header"><h2>📋 All Leave Requests</h2></div>
+                        <div class="card-header"><h2>All Leave Requests</h2></div>
                         <div class="card-body">
                             <div class="table-wrapper" id="leaveRequestsContainer"></div>
                         </div>
@@ -654,7 +624,7 @@
                 <!-- Leave Balance Tab -->
                 <div id="leave-balance" class="tab-content">
                     <div class="card">
-                        <div class="card-header"><h2>⚖️ Leave Balance Summary</h2></div>
+                        <div class="card-header"><h2>Leave Balance Summary</h2></div>
                         <div class="card-body">
                             <div class="table-wrapper" id="leaveBalanceContainer"></div>
                         </div>
@@ -665,13 +635,19 @@
                 <div id="payroll" class="tab-content">
                     <div class="card">
                         <div class="card-header">
-                            <h2>💰 Payroll Register</h2>
+                            <h2>Payroll Register</h2>
                             <div id="currentMonthDisplay" style="font-size:0.75rem; color:var(--primary);"></div>
                         </div>
                         <div class="card-body">
+                            <div class="form-row-4" style="margin-bottom: 1.5rem;">
+                                <div class="form-group"><label>Transport Allowance</label><input type="number" id="globalTransport" step="0.01" value="0" placeholder="0.00"></div>
+                                <div class="form-group"><label>Taxable Transport</label><input type="number" id="globalTaxableTransport" step="0.01" value="0" placeholder="0.00"></div>
+                                <div class="form-group"><label>Loan Deduction</label><input type="number" id="globalLoanDeduction" step="0.01" value="0" placeholder="0.00"></div>
+                                <div class="form-group"><label>Signature</label><input type="text" id="globalSignature" placeholder="Authorized by"></div>
+                            </div>
                             <div style="display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                                <button onclick="generateMonthlyPayroll()" class="btn btn-primary">📅 Generate This Month's Payroll</button>
-                                <button onclick="exportToExcel()" class="btn btn-success">📎 Export to Excel</button>
+                                <button onclick="generateMonthlyPayroll()" class="btn btn-primary">Generate This Month's Payroll</button>
+                                <button onclick="exportToExcel()" class="btn btn-success">Export to Excel</button>
                             </div>
                             <div class="table-wrapper" id="payrollContainer"></div>
                         </div>
@@ -681,7 +657,7 @@
                 <!-- Logs Tab -->
                 <div id="logs" class="tab-content">
                     <div class="card">
-                        <div class="card-header"><h2>📜 Activity Logs</h2></div>
+                        <div class="card-header"><h2>Activity Logs</h2></div>
                         <div class="card-body">
                             <div class="table-wrapper" id="logsContainer"></div>
                         </div>
@@ -706,7 +682,6 @@
         let tokenClient = null;
         let isAuthenticated = false;
         
-        // Data stores
         let employees = [];
         let leaveRequests = [];
         let leaveBalance = [];
@@ -787,7 +762,6 @@
             if (!isAuthenticated) return;
             
             try {
-                // Load Employees
                 let resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'Employees!A:F' 
@@ -797,7 +771,6 @@
                     monthlySalary: parseFloat(r[4]) || 0, email: r[5] || '' 
                 }));
 
-                // Load Leave Balance
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'LeaveBalance!A:E' 
@@ -807,7 +780,6 @@
                     remaining: parseFloat(r[3]) || 16 
                 }));
 
-                // Load Leave Requests
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'LeaveRequests!A:H' 
@@ -817,7 +789,6 @@
                     days: parseFloat(r[5]) || 0, status: r[6] || 'Pending', reason: r[7] 
                 }));
 
-                // Load Attendance
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'Attendance!A:G' 
@@ -827,19 +798,21 @@
                     minutes: parseFloat(r[4]) || 0, type: r[5], amount: parseFloat(r[6]) || 0 
                 }));
 
-                // Load Payroll
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
-                    range: 'Payroll!A:I' 
+                    range: 'Payroll!A:P' 
                 });
                 payrollRecords = (resp.result.values || []).slice(1).map(r => ({ 
                     id: r[0], employeeId: r[1], year: parseInt(r[2]), month: parseInt(r[3]),
-                    basicSalary: parseFloat(r[4]) || 0, overtimeAmount: parseFloat(r[5]) || 0,
-                    lateDeduction: parseFloat(r[6]) || 0, incomeTax: parseFloat(r[7]) || 0, 
-                    netPay: parseFloat(r[8]) || 0
+                    basicSalary: parseFloat(r[4]) || 0, transportAllowance: parseFloat(r[5]) || 0,
+                    taxableTransport: parseFloat(r[6]) || 0, overtimePay: parseFloat(r[7]) || 0,
+                    loanDeduction: parseFloat(r[8]) || 0, grossPay: parseFloat(r[9]) || 0,
+                    taxableIncome: parseFloat(r[10]) || 0, incomeTax: parseFloat(r[11]) || 0,
+                    pension7: parseFloat(r[12]) || 0, pension11: parseFloat(r[13]) || 0,
+                    totalDeductions: parseFloat(r[14]) || 0, netPay: parseFloat(r[15]) || 0,
+                    signature: r[16] || ''
                 }));
 
-                // Load Activity Logs
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'ActivityLogs!A:D' 
@@ -867,9 +840,13 @@
         }
 
         async function savePayroll() {
-            let data = [['ID','EmployeeID','Year','Month','BasicSalary','OvertimeAmount','LateDeduction','IncomeTax','NetPay']];
-            payrollRecords.forEach(p => data.push([p.id, p.employeeId, p.year, p.month, p.basicSalary, p.overtimeAmount, p.lateDeduction, p.incomeTax, p.netPay]));
-            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A:I' });
+            let data = [['ID','EmployeeID','Year','Month','BasicSalary','TransportAllowance','TaxableTransport','OvertimePay','LoanDeduction','GrossPay','TaxableIncome','IncomeTax','Pension7','Pension11','TotalDeductions','NetPay','Signature']];
+            payrollRecords.forEach(p => data.push([
+                p.id, p.employeeId, p.year, p.month, p.basicSalary, p.transportAllowance,
+                p.taxableTransport, p.overtimePay, p.loanDeduction, p.grossPay,
+                p.taxableIncome, p.incomeTax, p.pension7, p.pension11, p.totalDeductions, p.netPay, p.signature || ''
+            ]));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A:Q' });
             await gapi.client.sheets.spreadsheets.values.update({ 
                 spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A1', 
                 valueInputOption: 'RAW', resource: { values: data } 
@@ -910,7 +887,7 @@
             
             await logActivity('Added employee', name);
             await loadAllData();
-            showAlert(`✅ Employee "${name}" added successfully`, 'success');
+            showAlert(`Employee "${name}" added successfully`, 'success');
         };
 
         window.recordAttendance = async function(employeeId, date, hours, minutes, type) {
@@ -923,7 +900,7 @@
             await saveAttendance();
             await logActivity(`Recorded ${type}`, `${emp.name}: ${hours}h ${minutes}m, ${amount.toFixed(2)} ETB`);
             await loadAllData();
-            showAlert(`${type === 'overtime' ? '✅ Overtime' : '⚠️ Late hours'} recorded`, 'success');
+            showAlert(`${type === 'overtime' ? 'Overtime' : 'Late hours'} recorded`, 'success');
             return true;
         };
 
@@ -932,7 +909,7 @@
             let bal = leaveBalance.find(b => b.employeeId === empId);
             
             if (type !== 'Sick' && bal && days > bal.remaining) {
-                showAlert(`❌ Insufficient leave balance. Remaining: ${bal.remaining} days`, 'error');
+                showAlert(`Insufficient leave balance. Remaining: ${bal.remaining} days`, 'error');
                 return false;
             }
             
@@ -950,7 +927,7 @@
             let emp = employees.find(e => e.id === empId);
             await logActivity('Leave submitted', `${emp?.name} - ${days} days (${type})`);
             await loadAllData();
-            showAlert(`✅ Leave request submitted for ${days} days`, 'success');
+            showAlert(`Leave request submitted for ${days} days`, 'success');
             return true;
         };
 
@@ -982,7 +959,7 @@
                 
                 await logActivity('Leave approved', `Request ${id}`);
                 await loadAllData();
-                showAlert('✅ Leave request approved', 'success');
+                showAlert('Leave request approved', 'success');
             }
         };
 
@@ -999,27 +976,28 @@
                 });
                 await logActivity('Leave rejected', `Request ${id}`);
                 await loadAllData();
-                showAlert('❌ Leave request rejected', 'warning');
+                showAlert('Leave request rejected', 'warning');
             }
         };
 
-        // ============ PAYROLL GENERATION ============
+        // ============ PAYROLL GENERATION WITH ALL FIELDS ============
         window.generateMonthlyPayroll = async function() {
             let now = new Date();
             let currentYear = now.getFullYear();
             let currentMonth = now.getMonth();
             let monthName = getMonthName(currentMonth);
             
-            let monthlyOvertime = {};
-            let monthlyLate = {};
+            let globalTransport = parseFloat(document.getElementById('globalTransport').value) || 0;
+            let globalTaxableTransport = parseFloat(document.getElementById('globalTaxableTransport').value) || 0;
+            let globalLoanDeduction = parseFloat(document.getElementById('globalLoanDeduction').value) || 0;
+            let globalSignature = document.getElementById('globalSignature').value || '';
             
+            let monthlyOvertime = {};
             attendanceRecords.forEach(att => {
                 let attDate = new Date(att.date);
                 if (attDate.getFullYear() === currentYear && attDate.getMonth() === currentMonth) {
                     if (att.type === 'overtime') {
                         monthlyOvertime[att.employeeId] = (monthlyOvertime[att.employeeId] || 0) + att.amount;
-                    } else if (att.type === 'late') {
-                        monthlyLate[att.employeeId] = (monthlyLate[att.employeeId] || 0) + Math.abs(att.amount);
                     }
                 }
             });
@@ -1027,18 +1005,38 @@
             let newPayroll = [];
             for (let emp of employees) {
                 let overtimeAmt = monthlyOvertime[emp.id] || 0;
-                let lateAmt = monthlyLate[emp.id] || 0;
-                let grossPay = emp.monthlySalary + overtimeAmt - lateAmt;
-                let incomeTax = calculateEthiopianTax(emp.monthlySalary);
-                let netPay = grossPay - incomeTax;
+                
+                // Calculate all payroll components
+                let basicSalary = emp.monthlySalary;
+                let transportAllowance = globalTransport;
+                let taxableTransport = globalTaxableTransport;
+                let overtimePay = overtimeAmt;
+                let loanDeduction = globalLoanDeduction;
+                
+                let grossPay = basicSalary + transportAllowance + overtimePay;
+                
+                // Taxable Income: Salary + Taxable Transport (if >0) OR Salary + Overtime
+                let taxableIncome;
+                if (taxableTransport > 0) {
+                    taxableIncome = basicSalary + taxableTransport;
+                } else {
+                    taxableIncome = basicSalary + overtimePay;
+                }
+                
+                let incomeTax = calculateEthiopianTax(taxableIncome);
+                let pension7 = basicSalary * 0.07;
+                let pension11 = basicSalary * 0.11;
+                let totalDeductions = incomeTax + pension7 + loanDeduction;
+                let netPay = grossPay - totalDeductions;
                 
                 let existing = payrollRecords.find(p => p.employeeId === emp.id && p.year === currentYear && p.month === currentMonth);
                 let id = existing ? existing.id : 'PAY-' + Date.now() + '-' + emp.id;
                 
                 newPayroll.push({
                     id, employeeId: emp.id, year: currentYear, month: currentMonth,
-                    basicSalary: emp.monthlySalary, overtimeAmount: overtimeAmt, lateDeduction: lateAmt,
-                    incomeTax: incomeTax, netPay: netPay
+                    basicSalary, transportAllowance, taxableTransport, overtimePay, loanDeduction,
+                    grossPay, taxableIncome, incomeTax, pension7, pension11,
+                    totalDeductions, netPay, signature: globalSignature
                 });
             }
             
@@ -1047,26 +1045,51 @@
             await savePayroll();
             await logActivity('Generated monthly payroll', `${monthName} ${currentYear}`);
             await loadAllData();
-            showAlert(`✅ Payroll generated for ${monthName} ${currentYear}`, 'success');
+            showAlert(`Payroll generated for ${monthName} ${currentYear}`, 'success');
         };
 
         window.exportToExcel = function() {
-            let csv = "Employee ID,Employee Name,Basic Salary,Overtime Amount,Late Deduction,Income Tax,Net Pay\n";
-            payrollRecords.forEach(p => {
+            let headers = [
+                'No.', 'Employee Name', 'Basic Salary', 'Transport Allowance', 
+                'Taxable Transport', 'Overtime Pay', 'Loan Deduction', 'Gross Pay',
+                'Taxable Income', 'Income Tax', 'Pension 7%', 'Pension 11%',
+                'Total Deductions', 'Net Pay', 'Signature'
+            ];
+            
+            let csvRows = [headers.join(',')];
+            
+            payrollRecords.forEach((p, idx) => {
                 let emp = employees.find(e => e.id === p.employeeId);
-                csv += `"${p.employeeId}","${emp?.name || 'Unknown'}",${p.basicSalary},${p.overtimeAmount},${p.lateDeduction},${p.incomeTax},${p.netPay}\n`;
+                let row = [
+                    idx + 1,
+                    `"${emp?.name || 'Unknown'}"`,
+                    p.basicSalary,
+                    p.transportAllowance,
+                    p.taxableTransport,
+                    p.overtimePay,
+                    p.loanDeduction,
+                    p.grossPay,
+                    p.taxableIncome,
+                    p.incomeTax,
+                    p.pension7,
+                    p.pension11,
+                    p.totalDeductions,
+                    p.netPay,
+                    `"${p.signature || ''}"`
+                ];
+                csvRows.push(row.join(','));
             });
-            let blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+            
+            let blob = new Blob(["\uFEFF" + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
             let link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `payroll_${new Date().toISOString().split('T')[0]}.csv`;
             link.click();
-            showAlert('📎 Payroll exported to CSV', 'success');
+            showAlert('Payroll exported to CSV', 'success');
         };
 
         // ============ UI UPDATE ============
         function updateUI() {
-            // Update dropdowns
             let leaveEmpSelect = document.getElementById('leaveEmployee');
             let attEmpSelect = document.getElementById('attendanceEmployee');
             
@@ -1132,12 +1155,11 @@
                 let html = '<table class="data-table"><thead><tr><th>Employee</th><th>Total Allotted</th><th>Used</th><th>Remaining</th></tr></thead><tbody>';
                 leaveBalance.forEach(bal => {
                     let emp = employees.find(e => e.id === bal.employeeId);
-                    let remainingClass = bal.remaining < 5 ? 'style="color: var(--warning);"' : '';
                     html += `<tr>
                         <td><strong>${emp?.name || 'Unknown'}</strong></td>
                         <td>${bal.total} days</td>
                         <td>${bal.used} days</td>
-                        <td><strong ${remainingClass}>${bal.remaining} days</strong></td>
+                        <td><strong>${bal.remaining} days</strong></td>
                     </tr>`;
                 });
                 html += '</tbody></table>';
@@ -1163,7 +1185,7 @@
                         <td><strong>${emp?.name || 'Unknown'}</strong></td>
                         <td>${a.hours}</td>
                         <td>${a.minutes}</td>
-                        <td>${a.type === 'overtime' ? '➕ Overtime' : '⚠️ Late'}</td>
+                        <td>${a.type === 'overtime' ? 'Overtime' : 'Late'}</td>
                         <td ${amountClass}>ETB ${a.amount.toFixed(2)}</td>
                     </tr>`;
                 });
@@ -1174,35 +1196,72 @@
             // Payroll (current month)
             let currentPayroll = payrollRecords.filter(p => p.year === now.getFullYear() && p.month === now.getMonth());
             const payContainer = document.getElementById('payrollContainer');
-            let totals = { basicSalary: 0, overtimeAmount: 0, lateDeduction: 0, incomeTax: 0, netPay: 0 };
+            let totals = {
+                basicSalary: 0, transportAllowance: 0, taxableTransport: 0,
+                overtimePay: 0, loanDeduction: 0, grossPay: 0,
+                taxableIncome: 0, incomeTax: 0, pension7: 0, pension11: 0,
+                totalDeductions: 0, netPay: 0
+            };
             
             if (currentPayroll.length === 0) {
                 payContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No payroll for current month. Click "Generate This Month\'s Payroll" to calculate.</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>Employee</th><th>Basic Salary</th><th>Overtime</th><th>Late Deduction</th><th>Income Tax</th><th>Net Pay</th></tr></thead><tbody>';
-                currentPayroll.forEach(p => {
+                let html = '<table class="data-table"><thead><tr>' +
+                    '<th>No.</th><th>Employee</th><th>Basic Salary</th><th>Transport Allowance</th><th>Taxable Transport</th>' +
+                    '<th>Overtime Pay</th><th>Loan Deduction</th><th>Gross Pay</th><th>Taxable Income</th>' +
+                    '<th>Income Tax</th><th>Pension 7%</th><th>Pension 11%</th><th>Total Deductions</th><th>Net Pay</th><th>Signature</th>' +
+                    '</tr></thead><tbody>';
+                
+                currentPayroll.forEach((p, idx) => {
                     let emp = employees.find(e => e.id === p.employeeId);
+                    
                     totals.basicSalary += p.basicSalary;
-                    totals.overtimeAmount += p.overtimeAmount;
-                    totals.lateDeduction += p.lateDeduction;
+                    totals.transportAllowance += p.transportAllowance;
+                    totals.taxableTransport += p.taxableTransport;
+                    totals.overtimePay += p.overtimePay;
+                    totals.loanDeduction += p.loanDeduction;
+                    totals.grossPay += p.grossPay;
+                    totals.taxableIncome += p.taxableIncome;
                     totals.incomeTax += p.incomeTax;
+                    totals.pension7 += p.pension7;
+                    totals.pension11 += p.pension11;
+                    totals.totalDeductions += p.totalDeductions;
                     totals.netPay += p.netPay;
+                    
                     html += `<tr>
+                        <td>${idx + 1}</td>
                         <td><strong>${emp?.name || 'Unknown'}</strong></td>
                         <td>ETB ${p.basicSalary.toFixed(2)}</td>
-                        <td style="color: var(--primary);">+ETB ${p.overtimeAmount.toFixed(2)}</td>
-                        <td style="color: var(--danger);">-ETB ${p.lateDeduction.toFixed(2)}</td>
-                        <td>-ETB ${p.incomeTax.toFixed(2)}</td>
+                        <td>ETB ${p.transportAllowance.toFixed(2)}</td>
+                        <td>ETB ${p.taxableTransport.toFixed(2)}</td>
+                        <td>ETB ${p.overtimePay.toFixed(2)}</td>
+                        <td>ETB ${p.loanDeduction.toFixed(2)}</td>
+                        <td><strong>ETB ${p.grossPay.toFixed(2)}</strong></td>
+                        <td>ETB ${p.taxableIncome.toFixed(2)}</td>
+                        <td>ETB ${p.incomeTax.toFixed(2)}</td>
+                        <td>ETB ${p.pension7.toFixed(2)}</td>
+                        <td>ETB ${p.pension11.toFixed(2)}</td>
+                        <td>ETB ${p.totalDeductions.toFixed(2)}</td>
                         <td><strong>ETB ${p.netPay.toFixed(2)}</strong></td>
+                        <td>${p.signature || '-'}</td>
                     </tr>`;
                 });
+                
                 html += `<tr class="totals-row">
-                    <td><strong>TOTALS</strong></td>
+                    <td colspan="2"><strong>TOTALS</strong></td>
                     <td><strong>ETB ${totals.basicSalary.toFixed(2)}</strong></td>
-                    <td><strong>ETB ${totals.overtimeAmount.toFixed(2)}</strong></td>
-                    <td><strong>ETB ${totals.lateDeduction.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.transportAllowance.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.taxableTransport.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.overtimePay.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.loanDeduction.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.grossPay.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.taxableIncome.toFixed(2)}</strong></td>
                     <td><strong>ETB ${totals.incomeTax.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.pension7.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.pension11.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.totalDeductions.toFixed(2)}</strong></td>
                     <td><strong>ETB ${totals.netPay.toFixed(2)}</strong></td>
+                    <td></td>
                 </tr>`;
                 html += '</tbody></table>';
                 payContainer.innerHTML = html;
@@ -1235,11 +1294,11 @@
             if (currentPayroll.length === 0) {
                 summaryContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:1rem;">Generate payroll to see summary</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>Period</th><th>Employees</th><th>Total Gross</th><th>Total Tax</th><th>Total Net Pay</th></tr></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr><th>Period</th><th>Employees</th><th>Total Gross Pay</th><th>Total Tax</th><th>Total Net Pay</th></tr></thead><tbody>';
                 html += `<tr>
                     <td><strong>${getMonthName(now.getMonth())} ${now.getFullYear()}</strong></td>
                     <td>${currentPayroll.length}</td>
-                    <td>ETB ${(totals.basicSalary + totals.overtimeAmount).toFixed(2)}</td>
+                    <td>ETB ${totals.grossPay.toFixed(2)}</td>
                     <td>ETB ${totals.incomeTax.toFixed(2)}</td>
                     <td><strong>ETB ${totals.netPay.toFixed(2)}</strong></td>
                 </tr>`;
@@ -1277,7 +1336,7 @@
             updateDateDisplay();
         }
 
-        // ============ LEAVE FORM HANDLER (Show remaining balance) ============
+        // ============ LEAVE FORM HANDLER ============
         document.getElementById('leaveEmployee')?.addEventListener('change', () => {
             let empId = document.getElementById('leaveEmployee').value;
             let bal = leaveBalance.find(b => b.employeeId === empId);
@@ -1389,19 +1448,19 @@
                         document.getElementById('authContainer').classList.add('hidden');
                         document.getElementById('appContainer').classList.remove('hidden');
                         document.querySelectorAll('.nav-item').forEach(btn => {
-                            let txt = btn.textContent.split(' ')[0].replace(/[📊👥⏱️📝⚖️💰📜]/g, '').toLowerCase();
+                            let txt = btn.textContent.trim().toLowerCase();
                             if (txt === 'dashboard') btn.setAttribute('data-tab', 'dashboard');
                             else if (txt === 'employees') btn.setAttribute('data-tab', 'employees');
                             else if (txt === 'attendance') btn.setAttribute('data-tab', 'attendance');
-                            else if (txt === 'leaverequests') btn.setAttribute('data-tab', 'leave-requests');
-                            else if (txt === 'leavebalance') btn.setAttribute('data-tab', 'leave-balance');
+                            else if (txt === 'leave requests') btn.setAttribute('data-tab', 'leave-requests');
+                            else if (txt === 'leave balance') btn.setAttribute('data-tab', 'leave-balance');
                             else if (txt === 'payroll') btn.setAttribute('data-tab', 'payroll');
-                            else if (txt === 'activitylogs') btn.setAttribute('data-tab', 'logs');
+                            else if (txt === 'activity logs') btn.setAttribute('data-tab', 'logs');
                         });
                         document.querySelectorAll('.nav-item').forEach(btn => btn.onclick = () => switchTab(btn.getAttribute('data-tab')));
                         await loadAllData();
                         switchTab('dashboard');
-                        showAlert('✅ Successfully connected to Google Sheets!', 'success');
+                        showAlert('Successfully connected to Google Sheets', 'success');
                     } else {
                         document.getElementById('errorMessage').innerText = 'Authentication failed. Please try again.';
                     }
@@ -1424,10 +1483,9 @@
             isAuthenticated = false;
             document.getElementById('authContainer').classList.remove('hidden');
             document.getElementById('appContainer').classList.add('hidden');
-            showAlert('🔓 Logged out successfully', 'info');
+            showAlert('Logged out successfully', 'info');
         });
 
-        // Initialize
         gapi.load('client', async () => { 
             await initializeGapiClient(); 
             initializeGisClient(); 
