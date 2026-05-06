@@ -224,11 +224,6 @@
             color: white;
         }
 
-        .btn-secondary {
-            background-color: #f1f5f9;
-            color: var(--text-secondary);
-        }
-
         .card {
             background: var(--surface);
             border-radius: 0.75rem;
@@ -679,6 +674,7 @@
     <script src="https://accounts.google.com/gsi/client"></script>
 
     <script>
+        // ============ CONFIGURATION ============
         const CONFIG = {
             CLIENT_ID: '1058574831034-cb30fi18f3f05937969jksvhipso5hav.apps.googleusercontent.com',
             API_KEY: 'AIzaSyD4oMaBJeXQy8JCpzqcOAJ9HexNAKCPlyY',
@@ -688,6 +684,8 @@
 
         let tokenClient = null;
         let isAuthenticated = false;
+        let gapiInited = false;
+        let gisInited = false;
         
         let employees = [];
         let leaveRequests = [];
@@ -697,6 +695,7 @@
         let activityLogs = [];
         let payrollInputs = {};
 
+        // ============ CALCULATIONS ============
         function calculateHourlyRate(monthlySalary) {
             return monthlySalary / (30 * 8);
         }
@@ -738,6 +737,7 @@
             return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][month];
         }
 
+        // ============ UI FUNCTIONS ============
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -761,6 +761,53 @@
             let now = new Date();
             document.getElementById('currentDate').innerHTML = `${getMonthName(now.getMonth())} ${now.getFullYear()}`;
             document.getElementById('currentMonthDisplay').innerHTML = `${getMonthName(now.getMonth())} ${now.getFullYear()}`;
+        }
+
+        // ============ GOOGLE SHEETS API ============
+        async function gapiClientInit() {
+            await gapi.client.init({
+                apiKey: CONFIG.API_KEY,
+                discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+            });
+            gapiInited = true;
+            console.log('GAPI client initialized');
+        }
+
+        function gisClientInit() {
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CONFIG.CLIENT_ID,
+                scope: CONFIG.SCOPES,
+                callback: async (tokenResponse) => {
+                    console.log('Token callback received');
+                    if (tokenResponse.access_token) {
+                        gapi.client.setToken({ access_token: tokenResponse.access_token });
+                        isAuthenticated = true;
+                        document.getElementById('authContainer').classList.add('hidden');
+                        document.getElementById('appContainer').classList.remove('hidden');
+                        
+                        // Setup nav items
+                        document.querySelectorAll('.nav-item').forEach(btn => {
+                            let txt = btn.textContent.trim().toLowerCase();
+                            if (txt === 'dashboard') btn.setAttribute('data-tab', 'dashboard');
+                            else if (txt === 'employees') btn.setAttribute('data-tab', 'employees');
+                            else if (txt === 'attendance') btn.setAttribute('data-tab', 'attendance');
+                            else if (txt === 'leave requests') btn.setAttribute('data-tab', 'leave-requests');
+                            else if (txt === 'leave balance') btn.setAttribute('data-tab', 'leave-balance');
+                            else if (txt === 'payroll') btn.setAttribute('data-tab', 'payroll');
+                            else if (txt === 'activity logs') btn.setAttribute('data-tab', 'logs');
+                        });
+                        document.querySelectorAll('.nav-item').forEach(btn => btn.onclick = () => switchTab(btn.getAttribute('data-tab')));
+                        
+                        await loadAllData();
+                        switchTab('dashboard');
+                        showAlert('Successfully connected to Google Sheets', 'success');
+                    } else {
+                        document.getElementById('errorMessage').innerText = 'Authentication failed. Please try again.';
+                    }
+                },
+            });
+            gisInited = true;
+            console.log('GIS client initialized');
         }
 
         async function saveLeaveBalanceToSheet() {
@@ -797,12 +844,11 @@
                     remaining: parseFloat(r[3]) || 16 
                 }));
 
-                // IMPORTANT FIX: Ensure every employee has a leave balance record
+                // Ensure every employee has a leave balance record
                 let needsSave = false;
                 for (let emp of employees) {
                     const existingBalance = leaveBalance.find(b => b.employeeId === emp.id);
                     if (!existingBalance) {
-                        console.log(`Adding missing leave balance for employee: ${emp.name}`);
                         leaveBalance.push({
                             employeeId: emp.id,
                             total: 16,
@@ -813,10 +859,8 @@
                     }
                 }
                 
-                // If we added any missing balances, save them to the sheet
                 if (needsSave) {
                     await saveLeaveBalanceToSheet();
-                    showAlert('Added missing leave balances for all employees', 'success');
                 }
 
                 // Load Leave Requests
@@ -916,6 +960,7 @@
             } catch(e) {}
         }
 
+        // ============ CRUD OPERATIONS ============
         window.addEmployee = async function(name, hireDate, salary, email) {
             let id = 'EMP-' + Date.now();
             employees.push({ id, name, hireDate, status: 'Active', monthlySalary: salary, email });
@@ -1027,7 +1072,7 @@
             
             let html = '<div class="table-wrapper"><table class="data-table"><thead><tr>';
             html += '<th>Employee Name</th><th>Transport Allowance (ETB)</th><th>Taxable Transport (ETB)</th><th>Safe Reserve (ETB)</th><th>Signature</th>';
-            html += '</tr></thead><tbody>';
+            html += '<tr></thead><tbody>';
             
             employees.forEach(emp => {
                 const defaults = payrollInputs[emp.id] || { transport: 0, taxableTransport: 0, safe: 0, signature: '' };
@@ -1035,7 +1080,7 @@
                     <td><strong>${emp.name}</strong></td>
                     <td><input type="number" id="transport_${emp.id}" step="0.01" value="${defaults.transport}" placeholder="0.00" style="width:100%"></td>
                     <td><input type="number" id="taxableTransport_${emp.id}" step="0.01" value="${defaults.taxableTransport}" placeholder="0.00" style="width:100%"></td>
-                    <td><input type="number" id="safe_${emp.id}" step="0.01" value="${defaults.safe}" placeholder="0.00" style="width:100%"></td>
+                    <td><input type="number" id="safe_${emp.id}" step="0.01" value="${defaults.safe}" placeholder="0.00" style="width:100%"></table>
                     <td><input type="text" id="signature_${emp.id}" value="${defaults.signature}" placeholder="Authorized by" style="width:100%"></td>
                 </tr>`;
             });
@@ -1184,23 +1229,22 @@
                 empContainer.innerHTML = html;
             }
             
-            // Leave Balance Table - Shows ALL employees with their balances
+            // Leave Balance Table - Shows ALL employees
             const balContainer = document.getElementById('leaveBalanceContainer');
             if (employees.length === 0) {
                 balContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No employees found.</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr>';
+                let html = '<table class="data-table"><thead><td>';
                 html += '<th>Employee</th><th>Total Allotted</th><th>Used</th><th>Remaining</th>';
-                html += '<tr></thead><tbody>';
+                html += '</tr></thead><tbody>';
                 
-                // Show all employees with their leave balance
                 employees.forEach(emp => {
                     let bal = leaveBalance.find(b => b.employeeId === emp.id);
                     let total = bal ? bal.total : 16;
                     let used = bal ? bal.used : 0;
                     let remaining = bal ? bal.remaining : 16;
+                    let remainingClass = remaining < 5 ? 'style="color: var(--warning);"' : '';
                     
                     html += `<tr>
                         <td><strong>${emp.name}</strong></td>
-                        <td>${total} days</td>
-                        <td>${used} days</
+                        <td>${total} days</td
