@@ -302,33 +302,23 @@
             gap: 1rem;
         }
 
-        .form-row-4 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-row-5 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            gap: 1rem;
-        }
-
         .table-wrapper {
             overflow-x: auto;
             max-height: 500px;
             overflow-y: auto;
+            border-radius: 0.5rem;
         }
 
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
+            min-width: 600px;
         }
 
         .data-table th {
             text-align: left;
-            padding: 0.6rem 0.4rem;
+            padding: 0.75rem 1rem;
             font-weight: 600;
             color: var(--text-muted);
             background-color: #f8fafc;
@@ -336,14 +326,16 @@
             top: 0;
             border-bottom: 2px solid var(--border);
             text-transform: uppercase;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
         .data-table td {
-            padding: 0.6rem 0.4rem;
+            padding: 0.75rem 1rem;
             color: var(--text-secondary);
             border-bottom: 1px solid var(--border);
+            white-space: nowrap;
         }
 
         .data-table tbody tr:hover {
@@ -462,12 +454,29 @@
             border-radius: 3px;
         }
 
+        .payroll-input-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payroll-input-header {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem 0.75rem 0 0;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
             .main-content { margin-left: 0; }
             .app-layout { flex-direction: column; }
-            .form-row, .form-row-3, .form-row-4, .form-row-5 { grid-template-columns: 1fr; }
+            .form-row, .form-row-3 { grid-template-columns: 1fr; }
             .stats-grid { grid-template-columns: 1fr; }
+            .data-table th, .data-table td { white-space: normal; }
         }
     </style>
 </head>
@@ -507,7 +516,6 @@
             <main class="main-content">
                 <div id="alertContainer"></div>
 
-                <!-- Dashboard Tab -->
                 <div id="dashboard" class="tab-content active">
                     <div class="stats-grid" id="dashboardStats"></div>
                     <div class="card">
@@ -530,7 +538,6 @@
                     </div>
                 </div>
 
-                <!-- Employees Tab -->
                 <div id="employees" class="tab-content">
                     <div class="card">
                         <div class="card-header"><h2>Add New Employee</h2></div>
@@ -556,7 +563,6 @@
                     </div>
                 </div>
 
-                <!-- Attendance Tab -->
                 <div id="attendance" class="tab-content">
                     <div class="card">
                         <div class="card-header"><h2>Record Overtime / Late Hours</h2></div>
@@ -565,8 +571,8 @@
                                 <div class="form-group"><label>Select Employee</label><select id="attendanceEmployee" required></select></div>
                                 <div class="form-row-3">
                                     <div class="form-group"><label>Date</label><input type="date" id="attendanceDate" required></div>
-                                    <div class="form-group"><label>Hours</label><input type="number" id="overtimeHours" step="0.5" min="0" value="0" placeholder="0"></div>
-                                    <div class="form-group"><label>Minutes</label><input type="number" id="overtimeMinutes" step="15" min="0" max="55" value="0" placeholder="0"></div>
+                                    <div class="form-group"><label>Hours</label><input type="number" id="overtimeHours" step="1" min="0" value="0" placeholder="0"></div>
+                                    <div class="form-group"><label>Minutes</label><input type="number" id="overtimeMinutes" step="1" min="0" max="59" value="0" placeholder="0"></div>
                                 </div>
                                 <div class="form-group"><label>Type</label>
                                     <select id="attendanceType">
@@ -590,7 +596,6 @@
                     </div>
                 </div>
 
-                <!-- Leave Requests Tab -->
                 <div id="leave-requests" class="tab-content">
                     <div class="card">
                         <div class="card-header"><h2>Submit Leave Request</h2></div>
@@ -627,7 +632,6 @@
                     </div>
                 </div>
 
-                <!-- Leave Balance Tab -->
                 <div id="leave-balance" class="tab-content">
                     <div class="card">
                         <div class="card-header"><h2>Leave Balance Summary</h2></div>
@@ -637,7 +641,6 @@
                     </div>
                 </div>
 
-                <!-- Payroll Tab -->
                 <div id="payroll" class="tab-content">
                     <div class="card">
                         <div class="card-header">
@@ -645,8 +648,8 @@
                             <div id="currentMonthDisplay" style="font-size:0.75rem; color:var(--primary);"></div>
                         </div>
                         <div class="card-body">
-                            <div class="card" style="margin-bottom: 1.5rem;">
-                                <div class="card-header"><h3>Enter Payroll Data for Each Employee</h3></div>
+                            <div class="payroll-input-card">
+                                <div class="payroll-input-header">Payroll Data Entry</div>
                                 <div class="card-body">
                                     <div id="payrollInputsContainer"></div>
                                     <div style="display: flex; gap: 10px; margin-top: 1rem; flex-wrap: wrap;">
@@ -660,7 +663,6 @@
                     </div>
                 </div>
 
-                <!-- Logs Tab -->
                 <div id="logs" class="tab-content">
                     <div class="card">
                         <div class="card-header"><h2>Activity Logs</h2></div>
@@ -677,7 +679,6 @@
     <script src="https://accounts.google.com/gsi/client"></script>
 
     <script>
-        // ============ CONFIGURATION ============
         const CONFIG = {
             CLIENT_ID: '1058574831034-cb30fi18f3f05937969jksvhipso5hav.apps.googleusercontent.com',
             API_KEY: 'AIzaSyD4oMaBJeXQy8JCpzqcOAJ9HexNAKCPlyY',
@@ -694,10 +695,8 @@
         let attendanceRecords = [];
         let payrollRecords = [];
         let activityLogs = [];
-        
         let payrollInputs = {};
 
-        // ============ CALCULATIONS ============
         function calculateHourlyRate(monthlySalary) {
             return monthlySalary / (30 * 8);
         }
@@ -739,7 +738,6 @@
             return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][month];
         }
 
-        // ============ UI FUNCTIONS ============
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -765,7 +763,6 @@
             document.getElementById('currentMonthDisplay').innerHTML = `${getMonthName(now.getMonth())} ${now.getFullYear()}`;
         }
 
-        // ============ GOOGLE SHEETS DATA OPERATIONS ============
         async function loadAllData() {
             if (!isAuthenticated) return;
             
@@ -813,7 +810,7 @@
 
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
-                    range: 'Payroll!A:R' 
+                    range: 'Payroll!A:Q' 
                 });
                 const payValues = resp.result.values || [];
                 if (payValues.length > 1) {
@@ -821,7 +818,7 @@
                         id: r[0], employeeId: r[1], year: parseInt(r[2]), month: parseInt(r[3]),
                         basicSalary: parseFloat(r[4]) || 0, transportAllowance: parseFloat(r[5]) || 0,
                         taxableTransport: parseFloat(r[6]) || 0, overtimePay: parseFloat(r[7]) || 0,
-                        kaznaReserve: parseFloat(r[8]) || 0, grossPay: parseFloat(r[9]) || 0,
+                        safeReserve: parseFloat(r[8]) || 0, grossPay: parseFloat(r[9]) || 0,
                         taxableIncome: parseFloat(r[10]) || 0, incomeTax: parseFloat(r[11]) || 0,
                         pension7: parseFloat(r[12]) || 0, pension11: parseFloat(r[13]) || 0,
                         totalDeductions: parseFloat(r[14]) || 0, netPay: parseFloat(r[15]) || 0,
@@ -858,10 +855,10 @@
         }
 
         async function savePayroll() {
-            let data = [['ID','EmployeeID','Year','Month','BasicSalary','TransportAllowance','TaxableTransport','OvertimePay','KaznaReserve','GrossPay','TaxableIncome','IncomeTax','Pension7','Pension11','TotalDeductions','NetPay','Signature']];
+            let data = [['ID','EmployeeID','Year','Month','BasicSalary','TransportAllowance','TaxableTransport','OvertimePay','SafeReserve','GrossPay','TaxableIncome','IncomeTax','Pension7','Pension11','TotalDeductions','NetPay','Signature']];
             payrollRecords.forEach(p => data.push([
                 p.id, p.employeeId, p.year, p.month, p.basicSalary, p.transportAllowance,
-                p.taxableTransport, p.overtimePay, p.kaznaReserve, p.grossPay,
+                p.taxableTransport, p.overtimePay, p.safeReserve, p.grossPay,
                 p.taxableIncome, p.incomeTax, p.pension7, p.pension11, p.totalDeductions, p.netPay, p.signature || ''
             ]));
             await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A:Q' });
@@ -881,7 +878,6 @@
             } catch(e) {}
         }
 
-        // ============ CRUD OPERATIONS ============
         window.addEmployee = async function(name, hireDate, salary, email) {
             let id = 'EMP-' + Date.now();
             employees.push({ id, name, hireDate, status: 'Active', monthlySalary: salary, email });
@@ -998,7 +994,6 @@
             }
         };
 
-        // ============ PAYROLL GENERATION ============
         function renderPayrollInputs() {
             const container = document.getElementById('payrollInputsContainer');
             if (employees.length === 0) {
@@ -1007,17 +1002,17 @@
             }
             
             let html = '<div class="table-wrapper"><table class="data-table"><thead><tr>';
-            html += '<th>Employee Name</th><th>Transport Allowance</th><th>Taxable Transport</th><th>Kazna Reserve (የካዝና መጠባበቂያ)</th><th>Signature</th>';
+            html += '<th>Employee Name</th><th>Transport Allowance (ETB)</th><th>Taxable Transport (ETB)</th><th>Safe Reserve (ETB)</th><th>Signature</th>';
             html += '</tr></thead><tbody>';
             
             employees.forEach(emp => {
-                const defaults = payrollInputs[emp.id] || { transport: 0, taxableTransport: 0, kazna: 0, signature: '' };
+                const defaults = payrollInputs[emp.id] || { transport: 0, taxableTransport: 0, safe: 0, signature: '' };
                 html += `<tr>
                     <td><strong>${emp.name}</strong></td>
-                    <td><input type="number" id="transport_${emp.id}" step="0.01" value="${defaults.transport}" placeholder="0.00" style="width:120px"></td>
-                    <td><input type="number" id="taxableTransport_${emp.id}" step="0.01" value="${defaults.taxableTransport}" placeholder="0.00" style="width:120px"></td>
-                    <td><input type="number" id="kazna_${emp.id}" step="0.01" value="${defaults.kazna}" placeholder="0.00" style="width:120px"></td>
-                    <td><input type="text" id="signature_${emp.id}" value="${defaults.signature}" placeholder="Authorized by" style="width:150px"></td>
+                    <td><input type="number" id="transport_${emp.id}" step="0.01" value="${defaults.transport}" placeholder="0.00" style="width:100%"></td>
+                    <td><input type="number" id="taxableTransport_${emp.id}" step="0.01" value="${defaults.taxableTransport}" placeholder="0.00" style="width:100%"></td>
+                    <td><input type="number" id="safe_${emp.id}" step="0.01" value="${defaults.safe}" placeholder="0.00" style="width:100%"></td>
+                    <td><input type="text" id="signature_${emp.id}" value="${defaults.signature}" placeholder="Authorized by" style="width:100%"></td>
                 </tr>`;
             });
             
@@ -1045,10 +1040,10 @@
             for (let emp of employees) {
                 let transport = parseFloat(document.getElementById(`transport_${emp.id}`)?.value) || 0;
                 let taxableTransport = parseFloat(document.getElementById(`taxableTransport_${emp.id}`)?.value) || 0;
-                let kaznaReserve = parseFloat(document.getElementById(`kazna_${emp.id}`)?.value) || 0;
+                let safeReserve = parseFloat(document.getElementById(`safe_${emp.id}`)?.value) || 0;
                 let signature = document.getElementById(`signature_${emp.id}`)?.value || '';
                 
-                payrollInputs[emp.id] = { transport, taxableTransport, kazna: kaznaReserve, signature };
+                payrollInputs[emp.id] = { transport, taxableTransport, safe: safeReserve, signature };
                 
                 let overtimeAmt = monthlyOvertime[emp.id] || 0;
                 let basicSalary = emp.monthlySalary;
@@ -1065,7 +1060,7 @@
                 let incomeTax = calculateEthiopianTax(taxableIncome);
                 let pension7 = basicSalary * 0.07;
                 let pension11 = basicSalary * 0.11;
-                let totalDeductions = incomeTax + pension7 + kaznaReserve;
+                let totalDeductions = incomeTax + pension7 + safeReserve;
                 let netPay = grossPay - totalDeductions;
                 
                 let existing = payrollRecords.find(p => p.employeeId === emp.id && p.year === currentYear && p.month === currentMonth);
@@ -1074,7 +1069,7 @@
                 newPayroll.push({
                     id, employeeId: emp.id, year: currentYear, month: currentMonth,
                     basicSalary, transportAllowance: transport, taxableTransport, overtimePay: overtimeAmt,
-                    kaznaReserve, grossPay, taxableIncome, incomeTax, pension7, pension11,
+                    safeReserve, grossPay, taxableIncome, incomeTax, pension7, pension11,
                     totalDeductions, netPay, signature
                 });
             }
@@ -1090,7 +1085,7 @@
         window.exportToExcel = function() {
             let headers = [
                 'No.', 'Employee Name', 'Basic Salary', 'Transport Allowance', 
-                'Taxable Transport', 'Overtime Pay', 'Kazna Reserve', 'Gross Pay',
+                'Taxable Transport', 'Overtime Pay', 'Safe Reserve', 'Gross Pay',
                 'Taxable Income', 'Income Tax', 'Pension 7%', 'Pension 11%',
                 'Total Deductions', 'Net Pay', 'Signature'
             ];
@@ -1109,7 +1104,7 @@
                     p.transportAllowance,
                     p.taxableTransport,
                     p.overtimePay,
-                    p.kaznaReserve,
+                    p.safeReserve,
                     p.grossPay,
                     p.taxableIncome,
                     p.incomeTax,
@@ -1130,7 +1125,6 @@
             showAlert('Payroll exported to CSV', 'success');
         };
 
-        // ============ UI UPDATE ============
         function updateUI() {
             let leaveEmpSelect = document.getElementById('leaveEmployee');
             let attEmpSelect = document.getElementById('attendanceEmployee');
@@ -1144,17 +1138,19 @@
             
             renderPayrollInputs();
             
-            // Employee List
+            // Employee Directory Table - Fixed
             const empContainer = document.getElementById('employeeListContainer');
             if (employees.length === 0) {
                 empContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No employees yet. Add your first employee above.</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>ID</th><th>Name</th><th>Hire Date</th><th>Monthly Salary</th><th>Hourly Rate</th><th>Status</th></tr></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr>';
+                html += '<th>ID</th><th>Name</th><th>Hire Date</th><th>Monthly Salary</th><th>Hourly Rate</th><th>Status</th>';
+                html += '</tr></thead><tbody>';
                 employees.forEach(emp => {
                     html += `<tr>
                         <td>${emp.id}</td>
-                        <td><strong>${emp.name}</strong></td>
-                        <td>${emp.hireDate}<tr>
+                        <td>${emp.name}</td>
+                        <td>${emp.hireDate}</td>
                         <td>ETB ${emp.monthlySalary.toFixed(2)}</td>
                         <td>ETB ${calculateHourlyRate(emp.monthlySalary).toFixed(2)}/hr</td>
                         <td><span class="badge badge-active">${emp.status}</span></td>
@@ -1169,7 +1165,9 @@
             if (leaveRequests.length === 0) {
                 reqContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No leave requests yet.</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>ID</th><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th><th>Actions</th></td></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr>';
+                html += '<th>ID</th><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th><th>Actions</th>';
+                html += '</tr></thead><tbody>';
                 leaveRequests.forEach(req => {
                     let emp = employees.find(e => e.id === req.employeeId);
                     let badgeClass = req.status === 'Pending' ? 'badge-pending' : (req.status === 'Approved' ? 'badge-approved' : 'badge-rejected');
@@ -1179,7 +1177,7 @@
                         '<span style="color: var(--text-muted);">-</span>';
                     html += `<tr>
                         <td>${req.id}</td>
-                        <td><strong>${emp?.name || 'Unknown'}</strong></td>
+                        <td>${emp?.name || 'Unknown'}</td>
                         <td>${req.type}</td>
                         <td>${req.startDate} → ${req.endDate}</td>
                         <td>${req.days}</td>
@@ -1196,11 +1194,13 @@
             if (leaveBalance.length === 0) {
                 balContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No balance data available.</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>Employee</th><th>Total Allotted</th><th>Used</th><th>Remaining</th></tr></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr>';
+                html += '<th>Employee</th><th>Total Allotted</th><th>Used</th><th>Remaining</th>';
+                html += '</tr></thead><tbody>';
                 leaveBalance.forEach(bal => {
                     let emp = employees.find(e => e.id === bal.employeeId);
                     html += `<tr>
-                        <td><strong>${emp?.name || 'Unknown'}</strong></td>
+                        <td>${emp?.name || 'Unknown'}</td>
                         <td>${bal.total} days</td>
                         <td>${bal.used} days</td>
                         <td><strong>${bal.remaining} days</strong></td>
@@ -1220,13 +1220,15 @@
             if (filteredAtt.length === 0) {
                 attContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No attendance records for current month.</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>Date</th><th>Employee</th><th>Hours</th><th>Minutes</th><th>Type</th><th>Amount (ETB)</th></tr></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr>';
+                html += '<th>Date</th><th>Employee</th><th>Hours</th><th>Minutes</th><th>Type</th><th>Amount (ETB)</th>';
+                html += '</tr></thead><tbody>';
                 filteredAtt.forEach(a => {
                     let emp = employees.find(e => e.id === a.employeeId);
                     let amountClass = a.amount < 0 ? 'style="color: var(--danger);"' : 'style="color: var(--primary);"';
                     html += `<tr>
                         <td>${a.date}</td>
-                        <td><strong>${emp?.name || 'Unknown'}</strong></td>
+                        <td>${emp?.name || 'Unknown'}</td>
                         <td>${a.hours}</td>
                         <td>${a.minutes}</td>
                         <td>${a.type === 'overtime' ? 'Overtime' : 'Late'}</td>
@@ -1242,7 +1244,7 @@
             const payContainer = document.getElementById('payrollContainer');
             let totals = {
                 basicSalary: 0, transportAllowance: 0, taxableTransport: 0,
-                overtimePay: 0, kaznaReserve: 0, grossPay: 0,
+                overtimePay: 0, safeReserve: 0, grossPay: 0,
                 taxableIncome: 0, incomeTax: 0, pension7: 0, pension11: 0,
                 totalDeductions: 0, netPay: 0
             };
@@ -1250,11 +1252,11 @@
             if (currentPayroll.length === 0) {
                 payContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No payroll for current month. Enter data above and click "Generate This Month\'s Payroll".</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr>' +
-                    '<th>No.</th><th>Employee</th><th>Basic Salary</th><th>Transport Allowance</th><th>Taxable Transport</th>' +
-                    '<th>Overtime Pay</th><th>Kazna Reserve</th><th>Gross Pay</th><th>Taxable Income</th>' +
-                    '<th>Income Tax</th><th>Pension 7%</th><th>Pension 11%</th><th>Total Deductions</th><th>Net Pay</th><th>Signature</th>' +
-                    '</tr></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr>';
+                html += '<th>No.</th><th>Employee</th><th>Basic Salary</th><th>Transport Allowance</th><th>Taxable Transport</th>';
+                html += '<th>Overtime Pay</th><th>Safe Reserve</th><th>Gross Pay</th><th>Taxable Income</th>';
+                html += '<th>Income Tax</th><th>Pension 7%</th><th>Pension 11%</th><th>Total Deductions</th><th>Net Pay</th><th>Signature</th>';
+                html += '</tr></thead><tbody>';
                 
                 currentPayroll.forEach((p, idx) => {
                     let emp = employees.find(e => e.id === p.employeeId);
@@ -1263,7 +1265,7 @@
                     totals.transportAllowance += p.transportAllowance;
                     totals.taxableTransport += p.taxableTransport;
                     totals.overtimePay += p.overtimePay;
-                    totals.kaznaReserve += p.kaznaReserve;
+                    totals.safeReserve += p.safeReserve;
                     totals.grossPay += p.grossPay;
                     totals.taxableIncome += p.taxableIncome;
                     totals.incomeTax += p.incomeTax;
@@ -1274,12 +1276,12 @@
                     
                     html += `<tr>
                         <td>${idx + 1}</td>
-                        <td><strong>${emp?.name || 'Unknown'}</strong></td>
+                        <td>${emp?.name || 'Unknown'}</td>
                         <td>ETB ${p.basicSalary.toFixed(2)}</td>
                         <td>ETB ${p.transportAllowance.toFixed(2)}</td>
                         <td>ETB ${p.taxableTransport.toFixed(2)}</td>
                         <td>ETB ${p.overtimePay.toFixed(2)}</td>
-                        <td>ETB ${p.kaznaReserve.toFixed(2)}</td>
+                        <td>ETB ${p.safeReserve.toFixed(2)}</td>
                         <td><strong>ETB ${p.grossPay.toFixed(2)}</strong></td>
                         <td>ETB ${p.taxableIncome.toFixed(2)}</td>
                         <td>ETB ${p.incomeTax.toFixed(2)}</td>
@@ -1297,7 +1299,7 @@
                     <td><strong>ETB ${totals.transportAllowance.toFixed(2)}</strong></td>
                     <td><strong>ETB ${totals.taxableTransport.toFixed(2)}</strong></td>
                     <td><strong>ETB ${totals.overtimePay.toFixed(2)}</strong></td>
-                    <td><strong>ETB ${totals.kaznaReserve.toFixed(2)}</strong></td>
+                    <td><strong>ETB ${totals.safeReserve.toFixed(2)}</strong></td>
                     <td><strong>ETB ${totals.grossPay.toFixed(2)}</strong></td>
                     <td><strong>ETB ${totals.taxableIncome.toFixed(2)}</strong></td>
                     <td><strong>ETB ${totals.incomeTax.toFixed(2)}</strong></td>
@@ -1317,7 +1319,9 @@
             if (recent.length === 0) {
                 recentContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:1rem;">No recent leave requests</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th></tr></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr>';
+                html += '<th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th>';
+                html += '</tr></thead><tbody>';
                 recent.forEach(r => {
                     let emp = employees.find(e => e.id === r.employeeId);
                     let badgeClass = r.status === 'Pending' ? 'badge-pending' : (r.status === 'Approved' ? 'badge-approved' : 'badge-rejected');
@@ -1338,7 +1342,9 @@
             if (currentPayroll.length === 0) {
                 summaryContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:1rem;">Generate payroll to see summary</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>Period</th><th>Employees</th><th>Total Gross Pay</th><th>Total Tax</th><th>Total Net Pay</th></tr></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr>';
+                html += '<th>Period</th><th>Employees</th><th>Total Gross Pay</th><th>Total Tax</th><th>Total Net Pay</th>';
+                html += '</tr></thead><tbody>';
                 html += `<tr>
                     <td><strong>${getMonthName(now.getMonth())} ${now.getFullYear()}</strong></td>
                     <td>${currentPayroll.length}</td>
@@ -1364,11 +1370,13 @@
             if (activityLogs.length === 0) {
                 logContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No activity logs yet.</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>Timestamp</th><th>Action</th><th>Details</th><th>User</th></tr></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr>';
+                html += '<th>Timestamp</th><th>Action</th><th>Details</th><th>User</th>';
+                html += '</tr></thead><tbody>';
                 activityLogs.slice().reverse().slice(0, 100).forEach(log => {
                     html += `<tr>
                         <td>${new Date(log.time).toLocaleString()}</td>
-                        <td><strong>${log.action}</strong></td>
+                        <td>${log.action}</td>
                         <td>${log.details}</td>
                         <td>${log.user}</td>
                     </tr>`;
@@ -1380,7 +1388,7 @@
             updateDateDisplay();
         }
 
-        // ============ LEAVE FORM HANDLER ============
+        // Event Listeners
         document.getElementById('leaveEmployee')?.addEventListener('change', () => {
             let empId = document.getElementById('leaveEmployee').value;
             let bal = leaveBalance.find(b => b.employeeId === empId);
@@ -1389,7 +1397,6 @@
             } else {
                 document.getElementById('remainingBalance').value = '';
             }
-            
             let start = document.getElementById('leaveStart').value;
             let end = document.getElementById('leaveEnd').value;
             if (start && end) {
@@ -1398,7 +1405,6 @@
             }
         });
 
-        // ============ ATTENDANCE FORM HANDLERS ============
         document.getElementById('attendanceForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             let empId = document.getElementById('attendanceEmployee').value;
@@ -1434,7 +1440,6 @@
         document.getElementById('overtimeMinutes')?.addEventListener('input', calculateAttendancePreview);
         document.getElementById('attendanceType')?.addEventListener('change', calculateAttendancePreview);
 
-        // ============ LEAVE CALCULATION ============
         function updateLeaveDays() {
             let start = document.getElementById('leaveStart').value;
             let end = document.getElementById('leaveEnd').value;
@@ -1447,7 +1452,6 @@
         document.getElementById('leaveStart')?.addEventListener('change', updateLeaveDays);
         document.getElementById('leaveEnd')?.addEventListener('change', updateLeaveDays);
 
-        // ============ FORM SUBMITS ============
         document.getElementById('employeeForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             let name = document.getElementById('empName').value.trim();
@@ -1473,7 +1477,6 @@
             document.getElementById('remainingBalance').value = '';
         });
 
-        // ============ AUTHENTICATION ============
         function initializeGapiClient() {
             return gapi.client.init({ 
                 apiKey: CONFIG.API_KEY, 
