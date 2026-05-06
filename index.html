@@ -639,15 +639,15 @@
                             <div id="currentMonthDisplay" style="font-size:0.75rem; color:var(--primary);"></div>
                         </div>
                         <div class="card-body">
-                            <div class="form-row-4" style="margin-bottom: 1.5rem;">
-                                <div class="form-group"><label>Transport Allowance</label><input type="number" id="globalTransport" step="0.01" value="0" placeholder="0.00"></div>
-                                <div class="form-group"><label>Taxable Transport</label><input type="number" id="globalTaxableTransport" step="0.01" value="0" placeholder="0.00"></div>
-                                <div class="form-group"><label>Loan Deduction</label><input type="number" id="globalLoanDeduction" step="0.01" value="0" placeholder="0.00"></div>
-                                <div class="form-group"><label>Signature</label><input type="text" id="globalSignature" placeholder="Authorized by"></div>
-                            </div>
-                            <div style="display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                                <button onclick="generateMonthlyPayroll()" class="btn btn-primary">Generate This Month's Payroll</button>
-                                <button onclick="exportToExcel()" class="btn btn-success">Export to Excel</button>
+                            <div class="card" style="margin-bottom: 1.5rem;">
+                                <div class="card-header"><h3>Enter Payroll Data for Each Employee</h3></div>
+                                <div class="card-body">
+                                    <div id="payrollInputsContainer"></div>
+                                    <div style="display: flex; gap: 10px; margin-top: 1rem; flex-wrap: wrap;">
+                                        <button onclick="generateMonthlyPayroll()" class="btn btn-primary">Generate This Month's Payroll</button>
+                                        <button onclick="exportToExcel()" class="btn btn-success">Export to Excel</button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="table-wrapper" id="payrollContainer"></div>
                         </div>
@@ -688,6 +688,9 @@
         let attendanceRecords = [];
         let payrollRecords = [];
         let activityLogs = [];
+        
+        // Store per-employee payroll inputs
+        let payrollInputs = {};
 
         // ============ CALCULATIONS ============
         function calculateHourlyRate(monthlySalary) {
@@ -762,6 +765,7 @@
             if (!isAuthenticated) return;
             
             try {
+                // Load Employees
                 let resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'Employees!A:F' 
@@ -771,6 +775,7 @@
                     monthlySalary: parseFloat(r[4]) || 0, email: r[5] || '' 
                 }));
 
+                // Load Leave Balance
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'LeaveBalance!A:E' 
@@ -780,6 +785,7 @@
                     remaining: parseFloat(r[3]) || 16 
                 }));
 
+                // Load Leave Requests
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'LeaveRequests!A:H' 
@@ -789,30 +795,43 @@
                     days: parseFloat(r[5]) || 0, status: r[6] || 'Pending', reason: r[7] 
                 }));
 
+                // Load Attendance
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'Attendance!A:G' 
                 });
-                attendanceRecords = (resp.result.values || []).slice(1).map(r => ({ 
-                    id: r[0], employeeId: r[1], date: r[2], hours: parseFloat(r[3]) || 0, 
-                    minutes: parseFloat(r[4]) || 0, type: r[5], amount: parseFloat(r[6]) || 0 
-                }));
+                const attValues = resp.result.values || [];
+                if (attValues.length > 1) {
+                    attendanceRecords = attValues.slice(1).map(r => ({ 
+                        id: r[0], employeeId: r[1], date: r[2], hours: parseFloat(r[3]) || 0, 
+                        minutes: parseFloat(r[4]) || 0, type: r[5], amount: parseFloat(r[6]) || 0 
+                    }));
+                } else {
+                    attendanceRecords = [];
+                }
 
+                // Load Payroll
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
-                    range: 'Payroll!A:P' 
+                    range: 'Payroll!A:Q' 
                 });
-                payrollRecords = (resp.result.values || []).slice(1).map(r => ({ 
-                    id: r[0], employeeId: r[1], year: parseInt(r[2]), month: parseInt(r[3]),
-                    basicSalary: parseFloat(r[4]) || 0, transportAllowance: parseFloat(r[5]) || 0,
-                    taxableTransport: parseFloat(r[6]) || 0, overtimePay: parseFloat(r[7]) || 0,
-                    loanDeduction: parseFloat(r[8]) || 0, grossPay: parseFloat(r[9]) || 0,
-                    taxableIncome: parseFloat(r[10]) || 0, incomeTax: parseFloat(r[11]) || 0,
-                    pension7: parseFloat(r[12]) || 0, pension11: parseFloat(r[13]) || 0,
-                    totalDeductions: parseFloat(r[14]) || 0, netPay: parseFloat(r[15]) || 0,
-                    signature: r[16] || ''
-                }));
+                const payValues = resp.result.values || [];
+                if (payValues.length > 1) {
+                    payrollRecords = payValues.slice(1).map(r => ({ 
+                        id: r[0], employeeId: r[1], year: parseInt(r[2]), month: parseInt(r[3]),
+                        basicSalary: parseFloat(r[4]) || 0, transportAllowance: parseFloat(r[5]) || 0,
+                        taxableTransport: parseFloat(r[6]) || 0, overtimePay: parseFloat(r[7]) || 0,
+                        loanDeduction: parseFloat(r[8]) || 0, grossPay: parseFloat(r[9]) || 0,
+                        taxableIncome: parseFloat(r[10]) || 0, incomeTax: parseFloat(r[11]) || 0,
+                        pension7: parseFloat(r[12]) || 0, pension11: parseFloat(r[13]) || 0,
+                        totalDeductions: parseFloat(r[14]) || 0, netPay: parseFloat(r[15]) || 0,
+                        signature: r[16] || ''
+                    }));
+                } else {
+                    payrollRecords = [];
+                }
 
+                // Load Activity Logs
                 resp = await gapi.client.sheets.spreadsheets.values.get({ 
                     spreadsheetId: CONFIG.SPREADSHEET_ID, 
                     range: 'ActivityLogs!A:D' 
@@ -980,18 +999,40 @@
             }
         };
 
-        // ============ PAYROLL GENERATION WITH ALL FIELDS ============
+        // ============ PAYROLL GENERATION WITH PER-EMPLOYEE INPUTS ============
+        function renderPayrollInputs() {
+            const container = document.getElementById('payrollInputsContainer');
+            if (employees.length === 0) {
+                container.innerHTML = '<div class="text-muted" style="text-align:center; padding:1rem;">No employees found. Add employees first.</div>';
+                return;
+            }
+            
+            let html = '<div class="table-wrapper"><table class="data-table"><thead><tr>';
+            html += '<th>Employee Name</th><th>Transport Allowance</th><th>Taxable Transport</th><th>Loan Deduction (የካዝና መጠባበቂያ)</th><th>Signature</th>';
+            html += '</tr></thead><tbody>';
+            
+            employees.forEach(emp => {
+                const defaults = payrollInputs[emp.id] || { transport: 0, taxableTransport: 0, loan: 0, signature: '' };
+                html += `<tr>
+                    <td><strong>${emp.name}</strong></td>
+                    <td><input type="number" id="transport_${emp.id}" step="0.01" value="${defaults.transport}" placeholder="0.00" style="width:120px"></td>
+                    <td><input type="number" id="taxableTransport_${emp.id}" step="0.01" value="${defaults.taxableTransport}" placeholder="0.00" style="width:120px"></td>
+                    <td><input type="number" id="loan_${emp.id}" step="0.01" value="${defaults.loan}" placeholder="0.00" style="width:120px"></td>
+                    <td><input type="text" id="signature_${emp.id}" value="${defaults.signature}" placeholder="Authorized by" style="width:150px"></td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table></div>';
+            container.innerHTML = html;
+        }
+
         window.generateMonthlyPayroll = async function() {
             let now = new Date();
             let currentYear = now.getFullYear();
             let currentMonth = now.getMonth();
             let monthName = getMonthName(currentMonth);
             
-            let globalTransport = parseFloat(document.getElementById('globalTransport').value) || 0;
-            let globalTaxableTransport = parseFloat(document.getElementById('globalTaxableTransport').value) || 0;
-            let globalLoanDeduction = parseFloat(document.getElementById('globalLoanDeduction').value) || 0;
-            let globalSignature = document.getElementById('globalSignature').value || '';
-            
+            // Collect per-employee inputs
             let monthlyOvertime = {};
             attendanceRecords.forEach(att => {
                 let attDate = new Date(att.date);
@@ -1004,29 +1045,31 @@
             
             let newPayroll = [];
             for (let emp of employees) {
+                let transport = parseFloat(document.getElementById(`transport_${emp.id}`)?.value) || 0;
+                let taxableTransport = parseFloat(document.getElementById(`taxableTransport_${emp.id}`)?.value) || 0;
+                let loan = parseFloat(document.getElementById(`loan_${emp.id}`)?.value) || 0;
+                let signature = document.getElementById(`signature_${emp.id}`)?.value || '';
+                
+                // Save inputs for next time
+                payrollInputs[emp.id] = { transport, taxableTransport, loan, signature };
+                
                 let overtimeAmt = monthlyOvertime[emp.id] || 0;
-                
-                // Calculate all payroll components
                 let basicSalary = emp.monthlySalary;
-                let transportAllowance = globalTransport;
-                let taxableTransport = globalTaxableTransport;
-                let overtimePay = overtimeAmt;
-                let loanDeduction = globalLoanDeduction;
                 
-                let grossPay = basicSalary + transportAllowance + overtimePay;
+                let grossPay = basicSalary + transport + overtimeAmt;
                 
                 // Taxable Income: Salary + Taxable Transport (if >0) OR Salary + Overtime
                 let taxableIncome;
                 if (taxableTransport > 0) {
                     taxableIncome = basicSalary + taxableTransport;
                 } else {
-                    taxableIncome = basicSalary + overtimePay;
+                    taxableIncome = basicSalary + overtimeAmt;
                 }
                 
                 let incomeTax = calculateEthiopianTax(taxableIncome);
                 let pension7 = basicSalary * 0.07;
                 let pension11 = basicSalary * 0.11;
-                let totalDeductions = incomeTax + pension7 + loanDeduction;
+                let totalDeductions = incomeTax + pension7 + loan;
                 let netPay = grossPay - totalDeductions;
                 
                 let existing = payrollRecords.find(p => p.employeeId === emp.id && p.year === currentYear && p.month === currentMonth);
@@ -1034,9 +1077,9 @@
                 
                 newPayroll.push({
                     id, employeeId: emp.id, year: currentYear, month: currentMonth,
-                    basicSalary, transportAllowance, taxableTransport, overtimePay, loanDeduction,
+                    basicSalary, transportAllowance: transport, taxableTransport, overtimePay: overtimeAmt, loanDeduction: loan,
                     grossPay, taxableIncome, incomeTax, pension7, pension11,
-                    totalDeductions, netPay, signature: globalSignature
+                    totalDeductions, netPay, signature
                 });
             }
             
@@ -1058,7 +1101,10 @@
             
             let csvRows = [headers.join(',')];
             
-            payrollRecords.forEach((p, idx) => {
+            let currentYearMonth = getCurrentYearMonth();
+            let currentPayroll = payrollRecords.filter(p => p.year === currentYearMonth.year && p.month === currentYearMonth.month);
+            
+            currentPayroll.forEach((p, idx) => {
                 let emp = employees.find(e => e.id === p.employeeId);
                 let row = [
                     idx + 1,
@@ -1100,6 +1146,9 @@
                 }
             });
             
+            // Render payroll input fields
+            renderPayrollInputs();
+            
             // Employee List
             const empContainer = document.getElementById('employeeListContainer');
             if (employees.length === 0) {
@@ -1132,7 +1181,7 @@
                     let actions = req.status === 'Pending' ? 
                         `<button class="btn btn-success" onclick="approveLeave('${req.id}')" style="margin-right:5px">Approve</button>
                          <button class="btn btn-danger" onclick="rejectLeave('${req.id}')">Reject</button>` : 
-                        '<span style="color: var(--text-muted);">—</span>';
+                        '<span style="color: var(--text-muted);">-</span>';
                     html += `<tr>
                         <td>${req.id}</td>
                         <td><strong>${emp?.name || 'Unknown'}</strong></td>
@@ -1152,13 +1201,12 @@
             if (leaveBalance.length === 0) {
                 balContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No balance data available.</div>';
             } else {
-                let html = '<table class="data-table"><thead><tr><th>Employee</th><th>Total Allotted</th><th>Used</th><th>Remaining</th></tr></thead><tbody>';
+                let html = '<table class="data-table"><thead><tr><th>Employee</th><th>Total Allotted</th><th>Used</th><th>Remaining</th></table></thead><tbody>';
                 leaveBalance.forEach(bal => {
                     let emp = employees.find(e => e.id === bal.employeeId);
                     html += `<tr>
                         <td><strong>${emp?.name || 'Unknown'}</strong></td>
-                        <td>${bal.total} days</td>
-                        <td>${bal.used} days</td>
+                        <td>${bal.total} days</td><td>${bal.used} days</td>
                         <td><strong>${bal.remaining} days</strong></td>
                     </tr>`;
                 });
@@ -1204,7 +1252,7 @@
             };
             
             if (currentPayroll.length === 0) {
-                payContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No payroll for current month. Click "Generate This Month\'s Payroll" to calculate.</div>';
+                payContainer.innerHTML = '<div class="text-muted" style="text-align:center; padding:2rem;">No payroll for current month. Enter data above and click "Generate This Month\'s Payroll".</div>';
             } else {
                 let html = '<table class="data-table"><thead><tr>' +
                     '<th>No.</th><th>Employee</th><th>Basic Salary</th><th>Transport Allowance</th><th>Taxable Transport</th>' +
@@ -1283,7 +1331,7 @@
                         <td>${r.startDate} → ${r.endDate}</td>
                         <td>${r.days}</td>
                         <td><span class="badge ${badgeClass}">${r.status}</span></td>
-                    </tr>`;
+                    </table>`;
                 });
                 html += '</tbody></table>';
                 recentContainer.innerHTML = html;
