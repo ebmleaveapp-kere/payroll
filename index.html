@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Management Pro | Payroll + Leave Suite</title>
+    <title>HR Management System | Payroll + Leave</title>
     <style>
         * {
             margin: 0;
@@ -12,33 +12,27 @@
         }
 
         :root {
-            --primary-dark: #0f3b2c;
-            --primary: #1f8a4c;
-            --primary-light: #3aa86a;
-            --danger: #e03a3a;
-            --warning: #f4a261;
-            --background: #f4f7fc;
+            --primary-dark: #1a472a;
+            --primary: #2d6a4f;
+            --primary-light: #40916c;
+            --danger: #dc2f02;
+            --warning: #e85d04;
+            --background: #ffffff;
             --surface: #ffffff;
-            --border: #e2e8f0;
-            --text-primary: #1e293b;
-            --text-secondary: #475569;
-            --text-muted: #64748b;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --border: #e9ecef;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--background);
             color: var(--text-primary);
             height: 100vh;
             overflow: hidden;
         }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
         .app-layout {
             display: flex;
@@ -47,7 +41,7 @@
         }
 
         .sidebar {
-            width: 270px;
+            width: 260px;
             background: var(--surface);
             border-right: 1px solid var(--border);
             display: flex;
@@ -57,42 +51,36 @@
             left: 0;
             top: 0;
             z-index: 10;
-            box-shadow: var(--shadow-sm);
         }
 
         .sidebar-header {
-            padding: 1.75rem 1.5rem;
+            padding: 1.5rem;
             border-bottom: 1px solid var(--border);
-            background: linear-gradient(135deg, #fafcfd, #ffffff);
         }
 
         .sidebar-header h1 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 1.2rem;
+            color: var(--primary);
         }
 
         .sidebar-header p {
             font-size: 0.7rem;
             color: var(--text-muted);
-            margin-top: 0.3rem;
+            margin-top: 0.25rem;
         }
 
         .nav-menu {
             flex: 1;
-            padding: 1.25rem 0.75rem;
+            padding: 1rem;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.65rem 1rem;
-            margin-bottom: 0.3rem;
-            border-radius: 0.6rem;
+            gap: 0.75rem;
+            padding: 0.7rem 1rem;
+            margin-bottom: 0.25rem;
+            border-radius: 0.5rem;
             color: var(--text-secondary);
             background: transparent;
             border: none;
@@ -100,140 +88,78 @@
             cursor: pointer;
             font-size: 0.875rem;
             font-weight: 500;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
             text-align: left;
         }
 
         .nav-item:hover {
-            background-color: #f1f5f9;
+            background-color: #f8f9fa;
             color: var(--primary);
-            transform: translateX(2px);
         }
 
         .nav-item.active {
-            background: rgba(31, 138, 76, 0.1);
+            background-color: rgba(45, 106, 79, 0.08);
             color: var(--primary);
             border-left: 3px solid var(--primary);
-            font-weight: 600;
         }
 
         .sidebar-footer {
-            padding: 1.2rem;
+            padding: 1rem;
             border-top: 1px solid var(--border);
         }
 
         .logout-btn {
             padding: 0.7rem 1rem;
-            background: #fef2f2;
-            border: 1px solid #fee2e2;
-            border-radius: 0.5rem;
-            color: var(--danger);
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
             font-size: 0.875rem;
-            font-weight: 500;
             cursor: pointer;
             width: 100%;
-            text-align: center;
-            transition: all 0.2s;
+            text-align: left;
         }
 
         .logout-btn:hover {
-            background: #fee2e2;
-            transform: scale(0.98);
+            color: var(--danger);
         }
 
         .main-content {
             flex: 1;
-            margin-left: 270px;
+            margin-left: 260px;
             overflow-y: auto;
-            padding: 1.8rem;
-            background-color: var(--background);
+            padding: 1.5rem;
+            background-color: #f8f9fa;
         }
 
-        /* Auth Styles */
         .auth-container {
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background: linear-gradient(145deg, #eef2f5, #e2e8f0);
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
         }
 
         .auth-card {
             background: white;
-            padding: 2.5rem;
-            border-radius: 1.5rem;
+            padding: 2rem;
+            border-radius: 0.75rem;
             text-align: center;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.5);
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         .auth-card h1 {
-            font-size: 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+            color: var(--primary);
             margin-bottom: 0.5rem;
         }
 
-        .google-btn {
-            background: white;
-            border: 1px solid #dadce0;
-            border-radius: 2rem;
-            padding: 0.8rem;
-            width: 100%;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 1.5rem;
-            font-size: 1rem;
-        }
-
-        .google-btn:hover {
-            background: #f8f9fa;
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Component styles */
-        .card {
-            background: var(--surface);
-            border-radius: 1rem;
-            border: 1px solid var(--border);
-            margin-bottom: 1.8rem;
-            overflow: hidden;
-            transition: box-shadow 0.2s;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .card-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            background: #fefefe;
-        }
-
-        .card-header h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
         .btn {
-            padding: 0.5rem 1.2rem;
-            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
             font-size: 0.8125rem;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             border: none;
-            transition: all 0.15s;
         }
 
         .btn-primary {
@@ -243,19 +169,41 @@
 
         .btn-primary:hover {
             background-color: var(--primary-dark);
-            transform: translateY(-1px);
         }
 
         .btn-success {
-            background-color: #e6f7ec;
+            background-color: #e8f5e9;
             color: var(--primary);
-            border: 1px solid #b9f5ca;
+            border: 1px solid #c8e6c9;
         }
 
         .btn-danger {
-            background-color: #ffe8e8;
+            background-color: #ffe5e5;
             color: var(--danger);
-            border: 1px solid #ffcdcd;
+            border: 1px solid #ffcdd2;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: #fafbfc;
+        }
+
+        .card-header h2 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 1.5rem;
         }
 
         .form-group {
@@ -264,249 +212,711 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.25rem;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--text-secondary);
-            letter-spacing: 0.3px;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 0.6rem 0.8rem;
+            padding: 0.5rem 0.75rem;
             border: 1px solid var(--border);
-            border-radius: 0.6rem;
+            border-radius: 0.375rem;
             font-size: 0.875rem;
-            background: white;
         }
 
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
             border-color: var(--primary);
-            ring: 2px solid var(--primary-light);
         }
 
-        .stats-grid {
+        .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.8rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
-        .stat-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 1rem;
-            padding: 1.2rem;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.1s;
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
         }
-
-        .stat-card .value {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-top: 0.3rem;
-        }
-
-        .badge {
-            display: inline-flex;
-            padding: 0.25rem 0.7rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-        .badge-pending { background: #ffedd5; color: #d97706; }
-        .badge-approved { background: #dcfce7; color: #15803d; }
-        .badge-rejected { background: #fee2e2; color: #b91c1c; }
 
         .table-wrapper {
             overflow-x: auto;
-            max-height: 450px;
+            max-height: 500px;
             overflow-y: auto;
-            border-radius: 0.8rem;
         }
 
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .data-table th {
             text-align: left;
-            padding: 0.8rem 0.6rem;
-            font-weight: 700;
+            padding: 0.6rem 0.5rem;
+            font-weight: 600;
             color: var(--text-muted);
-            background: #fafcff;
+            background-color: #fafbfc;
             position: sticky;
             top: 0;
             border-bottom: 1px solid var(--border);
         }
 
         .data-table td {
-            padding: 0.7rem 0.6rem;
-            border-bottom: 1px solid #edf2f7;
+            padding: 0.6rem 0.5rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        .stat-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .alert {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid;
+        }
+
+        .alert-success {
+            background-color: #e8f5e9;
+            border-left-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .alert-error {
+            background-color: #ffe5e5;
+            border-left-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .hidden {
             display: none !important;
         }
 
-        .alert {
-            padding: 0.8rem 1rem;
-            border-radius: 0.7rem;
-            margin-bottom: 1.2rem;
-            border-left: 4px solid;
-            font-size: 0.85rem;
+        .badge {
+            display: inline-flex;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
         }
-        .alert-success { background: #ecfdf5; border-left-color: #10b981; color: #065f46; }
-        .alert-error { background: #fef2f2; border-left-color: #ef4444; color: #991b1b; }
-        .alert-warning { background: #fffbeb; border-left-color: #f59e0b; color: #b45309; }
+
+        .badge-pending { background: #fff3e0; color: #e85d04; }
+        .badge-approved { background: #e8f5e9; color: #2d6a4f; }
+        .badge-rejected { background: #ffe5e5; color: #dc2f02; }
 
         @media (max-width: 768px) {
-            .sidebar { width: 100%; height: auto; position: relative; transform: none; }
+            .sidebar { width: 100%; height: auto; position: relative; }
             .main-content { margin-left: 0; }
             .app-layout { flex-direction: column; }
-            .stats-grid { grid-template-columns: 1fr; }
+            .form-row, .form-row-3 { grid-template-columns: 1fr; }
         }
     </style>
-    <script src="https://accounts.google.com/gsi/client"></script>
-    <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
-
-<div id="authContainer" class="auth-container">
-    <div class="auth-card">
-        <h1>✨ HR Management Pro</h1>
-        <p style="color:#475569; margin-bottom:1rem;">Secure Payroll + Leave System</p>
-        <div style="width: 100%; height: 1px; background: #e2e8f0; margin: 1rem 0;"></div>
-        <button id="googleSignInBtn" class="google-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-            Sign in with Google (Sheets Access)
-        </button>
-        <div id="errorMessage" style="margin-top: 1.2rem; font-size: 0.75rem; color: var(--danger);"></div>
-        <p style="font-size: 0.7rem; margin-top: 1.2rem; color:#6c757d;">🔐 Access your HR spreadsheet securely</p>
+    <div id="authContainer" class="auth-container">
+        <div class="auth-card">
+            <h1>HR Management System</h1>
+            <p>Payroll + Leave Management</p>
+            <button id="loginBtn" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">🔐 Sign in with Google</button>
+            <div id="errorMessage" style="margin-top: 1rem; font-size: 0.75rem; color: var(--danger);"></div>
+        </div>
     </div>
-</div>
 
-<div id="appContainer" class="hidden">
-    <div class="app-layout">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1>📋 HR System</h1>
-                <p id="currentDate"></p>
-            </div>
-            <nav class="nav-menu">
-                <button class="nav-item active" data-tab="dashboard">📊 Dashboard</button>
-                <button class="nav-item" data-tab="employees">👥 Employees</button>
-                <button class="nav-item" data-tab="attendance">⏱️ Overtime & Late</button>
-                <button class="nav-item" data-tab="leave-requests">📅 Leave Requests</button>
-                <button class="nav-item" data-tab="leave-balance">⚖️ Leave Balance</button>
-                <button class="nav-item" data-tab="payroll">💰 Payroll</button>
-                <button class="nav-item" data-tab="logs">📜 Logs</button>
-            </nav>
-            <div class="sidebar-footer">
-                <button id="logoutBtn" class="logout-btn">🚪 Sign Out</button>
-            </div>
-        </aside>
-        <main class="main-content" id="mainContent">
-            <div id="alertContainer"></div>
-            <div id="dashboard" class="tab-content active"><div class="stats-grid" id="dashboardStats"></div><div class="card"><div class="card-header"><h2>📌 Recent Leave</h2></div><div class="card-body"><div id="recentLeaveContainer"></div></div></div><div class="card"><div class="card-header"><h2>💰 Monthly Payroll Snapshot</h2></div><div class="card-body"><div id="payrollSummaryContainer"></div></div></div></div>
-            <div id="employees" class="tab-content"><div class="card"><div class="card-header"><h2>➕ Add New Employee</h2></div><div class="card-body"><form id="employeeForm"><div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div class="form-group"><label>Full Name *</label><input type="text" id="empName" placeholder="John Doe" required></div><div class="form-group"><label>Hire Date</label><input type="date" id="hireDate" required></div></div><div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div class="form-group"><label>Monthly Salary (ETB) *</label><input type="number" id="monthlySalary" step="0.01" required></div><div class="form-group"><label>Email</label><input type="email" id="empEmail" placeholder="optional"></div></div><button type="submit" class="btn btn-primary">➕ Register Employee</button></form></div></div><div class="card"><div class="card-header"><h2>📋 Employee Directory</h2></div><div class="card-body"><div id="employeeListContainer"></div></div></div></div>
-            <div id="attendance" class="tab-content"><div class="card"><div class="card-header"><h2>⏲️ Record Hours</h2></div><div class="card-body"><form id="attendanceForm"><div class="form-group"><label>Employee</label><select id="attendanceEmployee" required></select></div><div class="form-row-3" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;"><div class="form-group"><label>Date</label><input type="date" id="attendanceDate" required></div><div class="form-group"><label>Hours</label><input type="number" id="overtimeHours" step="0.5" value="0"></div><div class="form-group"><label>Minutes</label><input type="number" id="overtimeMinutes" step="15" value="0"></div></div><div class="form-group"><label>Type</label><select id="attendanceType"><option value="overtime">➕ Overtime (Bonus)</option><option value="late">⚠️ Late (Deduction)</option></select></div><div class="form-group"><label>💰 Hourly Rate</label><input type="text" id="hourlyRateDisplay" readonly style="background:#f8fafc;"></div><div class="form-group"><label>💵 Calculated Amount</label><input type="text" id="calculatedAmount" readonly style="background:#eef2ff; font-weight:bold;"></div><button type="submit" class="btn btn-primary">📌 Save Entry</button></form></div></div><div class="card"><div class="card-header"><h2>📆 Current Month Records</h2></div><div class="card-body"><div id="attendanceRecordsContainer"></div></div></div></div>
-            <div id="leave-requests" class="tab-content"><div class="card"><div class="card-header"><h2>📋 Submit Leave Request</h2></div><div class="card-body"><form id="leaveForm"><div class="form-group"><label>Employee</label><select id="leaveEmployee" required></select></div><div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div class="form-group"><label>Leave Type</label><select id="leaveType"><option>Casual</option><option>Sick</option><option>Earned</option></select></div><div class="form-group"><label>Start Date</label><input type="date" id="leaveStart" required></div></div><div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div class="form-group"><label>End Date</label><input type="date" id="leaveEnd" required></div><div class="form-group"><label>Reason</label><input type="text" id="leaveReason" placeholder="Reason"></div></div><div class="form-group"><label>📆 Calculated Days</label><input type="text" id="calcDays" readonly style="background:#f1f5f9;"></div><button type="submit" class="btn btn-primary">✉️ Submit Request</button></form></div></div><div class="card"><div class="card-header"><h2>📌 All Leave Requests</h2></div><div class="card-body"><div id="leaveRequestsContainer"></div></div></div></div>
-            <div id="leave-balance" class="tab-content"><div class="card"><div class="card-header"><h2>📊 Leave Balance Summary</h2></div><div class="card-body"><div id="leaveBalanceContainer"></div></div></div></div>
-            <div id="payroll" class="tab-content"><div class="card"><div class="card-header"><h2>📈 Payroll Register</h2><div id="currentMonthDisplay" style="font-size:0.75rem; color:#2d6a4f;"></div></div><div class="card-body"><div style="display:flex; gap:12px; margin-bottom:20px;"><button onclick="window.generateMonthlyPayroll()" class="btn btn-primary">🔄 Generate This Month</button><button onclick="window.exportToExcel()" class="btn btn-success">📎 Export CSV</button></div><div id="payrollContainer"></div></div></div></div>
-            <div id="logs" class="tab-content"><div class="card"><div class="card-header"><h2>📋 Activity Trail</h2></div><div class="card-body"><div id="logsContainer"></div></div></div></div>
-        </main>
+    <div id="appContainer" class="hidden">
+        <div class="app-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h1>HR Management</h1>
+                    <p id="currentDate"></p>
+                </div>
+                <nav class="nav-menu">
+                    <button class="nav-item active" data-tab="dashboard">📊 Dashboard</button>
+                    <button class="nav-item" data-tab="employees">👥 Employees</button>
+                    <button class="nav-item" data-tab="attendance">⏱️ Overtime & Late</button>
+                    <button class="nav-item" data-tab="leave-requests">📝 Leave Requests</button>
+                    <button class="nav-item" data-tab="leave-balance">⚖️ Leave Balance</button>
+                    <button class="nav-item" data-tab="payroll">💰 Payroll</button>
+                    <button class="nav-item" data-tab="logs">📜 Activity Logs</button>
+                </nav>
+                <div class="sidebar-footer">
+                    <button id="logoutBtn" class="logout-btn">🚪 Logout</button>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div id="alertContainer"></div>
+
+                <div id="dashboard" class="tab-content active">
+                    <div class="stats-grid" id="dashboardStats"></div>
+                    <div class="card">
+                        <div class="card-header"><h2>Recent Leave Requests</h2></div>
+                        <div class="card-body"><div class="table-wrapper" id="recentLeaveContainer"></div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h2>Current Month Payroll</h2></div>
+                        <div class="card-body"><div class="table-wrapper" id="payrollSummaryContainer"></div></div>
+                    </div>
+                </div>
+
+                <div id="employees" class="tab-content">
+                    <div class="card">
+                        <div class="card-header"><h2>Add Employee</h2></div>
+                        <div class="card-body">
+                            <form id="employeeForm">
+                                <div class="form-row">
+                                    <div class="form-group"><label>Full Name *</label><input type="text" id="empName" required></div>
+                                    <div class="form-group"><label>Hire Date</label><input type="date" id="hireDate" required></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label>Monthly Salary (ETB) *</label><input type="number" id="monthlySalary" step="0.01" min="0" required></div>
+                                    <div class="form-group"><label>Email</label><input type="email" id="empEmail" placeholder="optional"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Employee</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h2>Employee Directory</h2></div>
+                        <div class="card-body"><div class="table-wrapper" id="employeeListContainer"></div></div>
+                    </div>
+                </div>
+
+                <div id="attendance" class="tab-content">
+                    <div class="card">
+                        <div class="card-header"><h2>Record Overtime / Late Hours</h2></div>
+                        <div class="card-body">
+                            <form id="attendanceForm">
+                                <div class="form-group"><label>Employee</label><select id="attendanceEmployee" required></select></div>
+                                <div class="form-row-3">
+                                    <div class="form-group"><label>Date</label><input type="date" id="attendanceDate" required></div>
+                                    <div class="form-group"><label>Hours</label><input type="number" id="overtimeHours" step="0.5" min="0" value="0"></div>
+                                    <div class="form-group"><label>Minutes</label><input type="number" id="overtimeMinutes" step="15" min="0" max="55" value="0"></div>
+                                </div>
+                                <div class="form-group"><label>Type</label>
+                                    <select id="attendanceType">
+                                        <option value="overtime">Overtime (Extra Pay)</option>
+                                        <option value="late">Late Hours (Deduction)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group"><label>Hourly Rate</label><input type="text" id="hourlyRateDisplay" readonly style="background:#f0f0f0"></div>
+                                <div class="form-group"><label>Calculated Amount (ETB)</label><input type="text" id="calculatedAmount" readonly style="background:#f0f0f0"></div>
+                                <button type="submit" class="btn btn-primary">Record Entry</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h2>Current Month Records</h2></div>
+                        <div class="card-body"><div class="table-wrapper" id="attendanceRecordsContainer"></div></div>
+                    </div>
+                </div>
+
+                <div id="leave-requests" class="tab-content">
+                    <div class="card">
+                        <div class="card-header"><h2>Submit Leave Request</h2></div>
+                        <div class="card-body">
+                            <form id="leaveForm">
+                                <div class="form-group"><label>Employee</label><select id="leaveEmployee" required></select></div>
+                                <div class="form-row">
+                                    <div class="form-group"><label>Leave Type</label><select id="leaveType"><option>Casual</option><option>Sick</option><option>Earned</option></select></div>
+                                    <div class="form-group"><label>Start Date</label><input type="date" id="leaveStart" required></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label>End Date</label><input type="date" id="leaveEnd" required></div>
+                                    <div class="form-group"><label>Reason</label><input type="text" id="leaveReason" required></div>
+                                </div>
+                                <div class="form-group"><label>Calculated Days</label><input type="text" id="calcDays" readonly style="background:#f0f0f0"></div>
+                                <button type="submit" class="btn btn-primary">Submit Request</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h2>All Leave Requests</h2></div>
+                        <div class="card-body"><div class="table-wrapper" id="leaveRequestsContainer"></div></div>
+                    </div>
+                </div>
+
+                <div id="leave-balance" class="tab-content">
+                    <div class="card">
+                        <div class="card-header"><h2>Leave Balance Summary</h2></div>
+                        <div class="card-body"><div class="table-wrapper" id="leaveBalanceContainer"></div></div>
+                    </div>
+                </div>
+
+                <div id="payroll" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Payroll Register</h2>
+                            <div id="currentMonthDisplay" style="font-size:0.75rem; color:#2d6a4f;"></div>
+                        </div>
+                        <div class="card-body">
+                            <button onclick="generateMonthlyPayroll()" class="btn btn-primary" style="margin-bottom:15px;">📅 Generate This Month's Payroll</button>
+                            <button onclick="exportToExcel()" class="btn btn-success" style="margin-left:10px;">📎 Export to Excel</button>
+                            <div class="table-wrapper" id="payrollContainer"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="logs" class="tab-content">
+                    <div class="card">
+                        <div class="card-header"><h2>Activity Logs</h2></div>
+                        <div class="card-body"><div class="table-wrapper" id="logsContainer"></div></div>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
-</div>
 
-<script>
-    // ==================== CONFIGURATION ====================
-    const CONFIG = {
-        CLIENT_ID: '1058574831034-cb30fi18f3f05937969jksvhipso5hav.apps.googleusercontent.com',
-        API_KEY: 'AIzaSyD4oMaBJeXQy8JCpzqcOAJ9HexNAKCPlyY',
-        SPREADSHEET_ID: '1NnOJFFLbPtuPYbI53dXIKA_KezdnxhCiqsPteuvL1Fc',
-        SCOPES: 'https://www.googleapis.com/auth/spreadsheets'
-    };
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
 
-    let tokenClient = null;
-    let isAuthenticated = false;
-    let gapiInitialized = false, gisInitialized = false;
-    
-    // Data stores
-    let employees = [], leaveRequests = [], leaveBalance = [], attendanceRecords = [], payrollRecords = [], activityLogs = [];
+    <script>
+        // ============ CONFIGURATION ============
+        const CONFIG = {
+            CLIENT_ID: '1058574831034-cb30fi18f3f05937969jksvhipso5hav.apps.googleusercontent.com',
+            API_KEY: 'AIzaSyD4oMaBJeXQy8JCpzqcOAJ9HexNAKCPlyY',
+            SPREADSHEET_ID: '1NnOJFFLbPtuPYbI53dXIKA_KezdnxhCiqsPteuvL1Fc',
+            SCOPES: 'https://www.googleapis.com/auth/spreadsheets'
+        };
 
-    // Helper functions
-    function calculateHourlyRate(monthlySalary) { return monthlySalary / (30 * 8); }
-    function calculateOvertimeAmount(hours, minutes, monthlySalary, isLate = false) { let totalHours = hours + (minutes/60); let amount = totalHours * calculateHourlyRate(monthlySalary); return isLate ? -amount : amount; }
-    function calculateEthiopianTax(taxableIncome) { if (taxableIncome <= 2000) return 0; if (taxableIncome <= 4000) return (taxableIncome*0.15)-300; if (taxableIncome <= 7000) return (taxableIncome*0.20)-500; if (taxableIncome <= 10000) return (taxableIncome*0.25)-850; if (taxableIncome <= 14000) return (taxableIncome*0.30)-1350; return (taxableIncome*0.35)-2050; }
-    function calculateLeaveDays(start, end) { let days=0; let d=new Date(start), e=new Date(end); while(d<=e){ let day=d.getDay(); if(day!==0) days+=(day===6)?0.5:1; d.setDate(d.getDate()+1); } return days; }
-    function getCurrentYearMonth() { let now=new Date(); return { year: now.getFullYear(), month: now.getMonth() }; }
-    function getMonthName(month) { return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][month]; }
-    function showAlert(msg, type) { let container=document.getElementById('alertContainer'); let div=document.createElement('div'); div.className=`alert alert-${type}`; div.innerHTML=msg; container.appendChild(div); setTimeout(()=>div.remove(),4500); }
+        let tokenClient = null;
+        let isAuthenticated = false;
+        
+        let employees = [];
+        let leaveRequests = [];
+        let leaveBalance = [];
+        let attendanceRecords = [];
+        let payrollRecords = [];
+        let activityLogs = [];
 
-    // Google Sheets CRUD
-    async function loadAllData() { if(!isAuthenticated) return; try { let r=await gapi.client.sheets.spreadsheets.values.get({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'Employees!A:F'}); employees=(r.result.values||[]).slice(1).map(r=>({id:r[0],name:r[1],hireDate:r[2],status:r[3]||'Active',monthlySalary:parseFloat(r[4])||0,email:r[5]||''}));
-        r=await gapi.client.sheets.spreadsheets.values.get({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveBalance!A:E'}); leaveBalance=(r.result.values||[]).slice(1).map(r=>({employeeId:r[0],total:parseFloat(r[1])||16,used:parseFloat(r[2])||0,remaining:parseFloat(r[3])||16}));
-        r=await gapi.client.sheets.spreadsheets.values.get({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveRequests!A:H'}); leaveRequests=(r.result.values||[]).slice(1).map(r=>({id:r[0],employeeId:r[1],type:r[2],startDate:r[3],endDate:r[4],days:parseFloat(r[5])||0,status:r[6]||'Pending',reason:r[7]}));
-        r=await gapi.client.sheets.spreadsheets.values.get({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'Attendance!A:G'}); attendanceRecords=(r.result.values||[]).slice(1).map(r=>({id:r[0],employeeId:r[1],date:r[2],hours:parseFloat(r[3])||0,minutes:parseFloat(r[4])||0,type:r[5],amount:parseFloat(r[6])||0}));
-        r=await gapi.client.sheets.spreadsheets.values.get({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'Payroll!A:I'}); payrollRecords=(r.result.values||[]).slice(1).map(r=>({id:r[0],employeeId:r[1],year:parseInt(r[2]),month:parseInt(r[3]),basicSalary:parseFloat(r[4]),overtimeAmount:parseFloat(r[5]),lateDeduction:parseFloat(r[6]),incomeTax:parseFloat(r[7]),netPay:parseFloat(r[8])}));
-        r=await gapi.client.sheets.spreadsheets.values.get({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'ActivityLogs!A:D'}); activityLogs=(r.result.values||[]).slice(1).map(r=>({time:r[0],action:r[1],details:r[2],user:r[3]}));
-        updateUI(); } catch(e){ console.error(e); showAlert('Failed to sync data','error'); } }
-    
-    async function logActivity(action,details){ try{ await gapi.client.sheets.spreadsheets.values.append({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'ActivityLogs!A:D', valueInputOption:'RAW', resource:{values:[[new Date().toISOString(),action,details,'Manager']]}}); }catch(e){} }
-    
-    async function saveAttendance() { let data=[['ID','EmployeeID','Date','Hours','Minutes','Type','Amount']]; attendanceRecords.forEach(a=>data.push([a.id,a.employeeId,a.date,a.hours,a.minutes,a.type,a.amount])); await gapi.client.sheets.spreadsheets.values.clear({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'Attendance!A:G'}); await gapi.client.sheets.spreadsheets.values.update({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'Attendance!A1', valueInputOption:'RAW', resource:{values:data}}); }
-    async function savePayroll() { let data=[['ID','EmployeeID','Year','Month','BasicSalary','OvertimeAmount','LateDeduction','IncomeTax','NetPay']]; payrollRecords.forEach(p=>data.push([p.id,p.employeeId,p.year,p.month,p.basicSalary,p.overtimeAmount,p.lateDeduction,p.incomeTax,p.netPay])); await gapi.client.sheets.spreadsheets.values.clear({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'Payroll!A:I'}); await gapi.client.sheets.spreadsheets.values.update({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'Payroll!A1', valueInputOption:'RAW', resource:{values:data}}); }
+        // ============ CALCULATIONS ============
+        function calculateHourlyRate(monthlySalary) {
+            return monthlySalary / (30 * 8);
+        }
 
-    window.addEmployee = async function(name,hireDate,salary,email){ let id='EMP-'+Date.now(); employees.push({id,name,hireDate,status:'Active',monthlySalary:salary,email}); leaveBalance.push({employeeId:id,total:16,used:0,remaining:16}); let empData=[['ID','Name','HireDate','Status','MonthlySalary','Email']]; employees.forEach(e=>empData.push([e.id,e.name,e.hireDate,e.status,e.monthlySalary,e.email||''])); await gapi.client.sheets.spreadsheets.values.clear({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'Employees!A:F'}); await gapi.client.sheets.spreadsheets.values.update({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'Employees!A1', valueInputOption:'RAW', resource:{values:empData}}); let balData=[['EmployeeID','TotalAllotted','Used','Remaining','LastUpdated']]; leaveBalance.forEach(b=>balData.push([b.employeeId,b.total,b.used,b.remaining,new Date().toISOString()])); await gapi.client.sheets.spreadsheets.values.clear({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveBalance!A:E'}); await gapi.client.sheets.spreadsheets.values.update({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveBalance!A1', valueInputOption:'RAW', resource:{values:balData}}); await logActivity('Added employee',name); await loadAllData(); showAlert(`✅ ${name} added`,'success'); };
-    
-    window.recordAttendance = async function(employeeId,date,hours,minutes,type){ let emp=employees.find(e=>e.id===employeeId); if(!emp) return false; let amount=calculateOvertimeAmount(hours,minutes,emp.monthlySalary,type==='late'); let id='ATT-'+Date.now(); attendanceRecords.push({id,employeeId,date,hours,minutes,type,amount}); await saveAttendance(); await logActivity(`Recorded ${type}`, `${emp.name} ${hours}h ${minutes}m`); await loadAllData(); showAlert(`${type==='overtime'?'Overtime':'Late'} saved`,'success'); };
-    
-    window.submitLeave = async function(empId,type,start,end,reason){ let days=calculateLeaveDays(start,end); let bal=leaveBalance.find(b=>b.employeeId===empId); if(type!=='Sick' && bal && days>bal.remaining){ showAlert(`Insufficient balance: ${bal.remaining} days`,'error'); return false; } let id='REQ-'+Date.now(); leaveRequests.push({id,employeeId:empId,type,startDate:start,endDate:end,days,status:'Pending',reason}); let reqData=[['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']]; leaveRequests.forEach(r=>reqData.push([r.id,r.employeeId,r.type,r.startDate,r.endDate,r.days,r.status,r.reason])); await gapi.client.sheets.spreadsheets.values.clear({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveRequests!A:H'}); await gapi.client.sheets.spreadsheets.values.update({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveRequests!A1', valueInputOption:'RAW', resource:{values:reqData}}); await logActivity('Leave request', `${employees.find(e=>e.id===empId)?.name} - ${days} days`); await loadAllData(); showAlert('Request submitted','success'); };
-    
-    window.approveLeave = async function(id){ let req=leaveRequests.find(r=>r.id===id); if(req){ req.status='Approved'; let bal=leaveBalance.find(b=>b.employeeId===req.employeeId); if(bal){ bal.used+=req.days; bal.remaining=bal.total-bal.used; } let reqData=[['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']]; leaveRequests.forEach(r=>reqData.push([r.id,r.employeeId,r.type,r.startDate,r.endDate,r.days,r.status,r.reason])); await gapi.client.sheets.spreadsheets.values.clear({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveRequests!A:H'}); await gapi.client.sheets.spreadsheets.values.update({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveRequests!A1', valueInputOption:'RAW', resource:{values:reqData}}); let balData=[['EmployeeID','TotalAllotted','Used','Remaining','LastUpdated']]; leaveBalance.forEach(b=>balData.push([b.employeeId,b.total,b.used,b.remaining,new Date().toISOString()])); await gapi.client.sheets.spreadsheets.values.clear({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveBalance!A:E'}); await gapi.client.sheets.spreadsheets.values.update({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveBalance!A1', valueInputOption:'RAW', resource:{values:balData}}); await logActivity('Approved leave',req.id); await loadAllData(); showAlert('Leave approved','success'); } };
-    window.rejectLeave = async function(id){ let req=leaveRequests.find(r=>r.id===id); if(req){ req.status='Rejected'; let reqData=[['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']]; leaveRequests.forEach(r=>reqData.push([r.id,r.employeeId,r.type,r.startDate,r.endDate,r.days,r.status,r.reason])); await gapi.client.sheets.spreadsheets.values.clear({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveRequests!A:H'}); await gapi.client.sheets.spreadsheets.values.update({spreadsheetId:CONFIG.SPREADSHEET_ID, range:'LeaveRequests!A1', valueInputOption:'RAW', resource:{values:reqData}}); await loadAllData(); showAlert('Request rejected','warning'); } };
-    
-    window.generateMonthlyPayroll = async function(){ let now=new Date(); let year=now.getFullYear(), month=now.getMonth(); let monthlyOvertime={}, monthlyLate={}; attendanceRecords.forEach(att=>{ let d=new Date(att.date); if(d.getFullYear()===year && d.getMonth()===month){ if(att.type==='overtime') monthlyOvertime[att.employeeId]=(monthlyOvertime[att.employeeId]||0)+att.amount; else if(att.type==='late') monthlyLate[att.employeeId]=(monthlyLate[att.employeeId]||0)+Math.abs(att.amount); } }); let newPayroll=[]; for(let emp of employees){ let overtimeAmt=monthlyOvertime[emp.id]||0, lateAmt=monthlyLate[emp.id]||0; let grossPay=emp.monthlySalary+overtimeAmt-lateAmt; let incomeTax=calculateEthiopianTax(emp.monthlySalary); let netPay=grossPay-incomeTax; let existing=payrollRecords.find(p=>p.employeeId===emp.id && p.year===year && p.month===month); let id=existing?existing.id:'PAY-'+Date.now()+'-'+emp.id; newPayroll.push({id,employeeId:emp.id,year,month,basicSalary:emp.monthlySalary,overtimeAmount:overtimeAmt,lateDeduction:lateAmt,incomeTax,netPay}); } payrollRecords=payrollRecords.filter(p=>!(p.year===year && p.month===month)); payrollRecords.push(...newPayroll); await savePayroll(); await logActivity('Generated payroll',`${getMonthName(month)} ${year}`); await loadAllData(); showAlert(`Payroll generated for ${getMonthName(month)} ${year}`,'success'); };
-    window.exportToExcel = function(){ let csv="Employee ID,Name,Basic Salary,Overtime,Late Deduction,Income Tax,Net Pay\n"; payrollRecords.forEach(p=>{ let emp=employees.find(e=>e.id===p.employeeId); csv+=`${p.employeeId},${emp?.name||'Unknown'},${p.basicSalary},${p.overtimeAmount},${p.lateDeduction},${p.incomeTax},${p.netPay}\n`; }); let blob=new Blob([csv],{type:'text/csv'}); let link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download=`payroll_${new Date().toISOString().split('T')[0]}.csv`; link.click(); showAlert('Export complete','success'); };
-    
-    function updateUI(){ let empSelect=document.getElementById('leaveEmployee'), attSelect=document.getElementById('attendanceEmployee'); [empSelect,attSelect].forEach(sel=>{ if(sel){ sel.innerHTML='<option value="">Select Employee</option>'; employees.forEach(e=>sel.appendChild(new Option(e.name,e.id))); } }); document.getElementById('employeeListContainer').innerHTML=employees.length?`<table class="data-table"><tr><th>Name</th><th>Hire Date</th><th>Salary</th><th>Hourly Rate</th><th>Status</th></tr>${employees.map(e=>`<tr><td>${e.name}</td><td>${e.hireDate}</td><td>ETB ${e.monthlySalary}</td><td>ETB ${calculateHourlyRate(e.monthlySalary).toFixed(2)}/hr</td><td>${e.status}</td></tr>`).join('')}</table>`:'<p>No employees</p>';
-        document.getElementById('leaveRequestsContainer').innerHTML=leaveRequests.length?`<table class="data-table"><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th><th>Actions</th></tr>${leaveRequests.map(r=>{let emp=employees.find(e=>e.id===r.employeeId);let actions=r.status==='Pending'?`<button onclick="window.approveLeave('${r.id}')" class="btn btn-success" style="margin-right:5px">Approve</button><button onclick="window.rejectLeave('${r.id}')" class="btn btn-danger">Reject</button>`:'-';return `<tr><td>${emp?.name||'Unknown'}</td><td>${r.type}</td><td>${r.startDate}→${r.endDate}</td><td>${r.days}</td><td><span class="badge badge-${r.status.toLowerCase()}">${r.status}</span></td><td>${actions}</td></tr>`;}).join('')}</table>`:'<p>No requests</p>';
-        let now=new Date(); let filteredAtt=attendanceRecords.filter(a=>{let d=new Date(a.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}); document.getElementById('attendanceRecordsContainer').innerHTML=filteredAtt.length?`<table class="data-table"><tr><th>Date</th><th>Employee</th><th>Hours</th><th>Min</th><th>Type</th><th>Amount</th></tr>${filteredAtt.map(a=>{let emp=employees.find(e=>e.id===a.employeeId);return `<tr><td>${a.date}</td><td>${emp?.name||'Unknown'}</td><td>${a.hours}</td><td>${a.minutes}</td><td>${a.type==='overtime'?'➕ Overtime':'⚠️ Late'}</td><td>ETB ${a.amount.toFixed(2)}</td></tr>`;}).join('')}</table>`:'<p>No records this month</p>';
-        let currentPayroll=payrollRecords.filter(p=>p.year===now.getFullYear()&&p.month===now.getMonth()); document.getElementById('payrollContainer').innerHTML=currentPayroll.length?`<table class="data-table"><tr><th>Employee</th><th>Basic</th><th>Overtime</th><th>Late Ded</th><th>Tax</th><th>Net Pay</th></tr>${currentPayroll.map(p=>{let emp=employees.find(e=>e.id===p.employeeId);return `<tr><td>${emp?.name||'Unknown'}</td><td>ETB ${p.basicSalary}</td><td>ETB ${p.overtimeAmount}</td><td>ETB ${p.lateDeduction}</td><td>ETB ${p.incomeTax}</td><td><strong>ETB ${p.netPay}</strong></td></tr>`;}).join('')}</table>`:'<p>No payroll generated. Click Generate.</p>';
-        let monthlyTotal=currentPayroll.reduce((s,p)=>s+p.netPay,0); document.getElementById('dashboardStats').innerHTML=`<div class="stat-card"><h3>Employees</h3><div class="value">${employees.length}</div></div><div class="stat-card"><h3>Pending Leave</h3><div class="value">${leaveRequests.filter(r=>r.status==='Pending').length}</div></div><div class="stat-card"><h3>Monthly Payroll</h3><div class="value">ETB ${monthlyTotal.toFixed(0)}</div></div><div class="stat-card"><h3>Overtime Amt</h3><div class="value">ETB ${filteredAtt.filter(a=>a.type==='overtime').reduce((s,a)=>s+a.amount,0).toFixed(0)}</div></div>`;
-        document.getElementById('logsContainer').innerHTML=activityLogs.length?`<table class="data-table"><tr><th>Time</th><th>Action</th><th>Details</th></tr>${activityLogs.slice().reverse().slice(0,40).map(l=>`<tr><td>${new Date(l.time).toLocaleString()}</td><td>${l.action}</td><td>${l.details}</td></tr>`).join('')}</table>`:'<p>No logs</p>';
-        document.getElementById('currentDate').innerHTML=`${getMonthName(now.getMonth())} ${now.getFullYear()}`; document.getElementById('currentMonthDisplay').innerHTML=`${getMonthName(now.getMonth())} ${now.getFullYear()}`;
-        document.getElementById('leaveBalanceContainer').innerHTML=leaveBalance.length?`<table class="data-table"><tr><th>Employee</th><th>Allotted</th><th>Used</th><th>Remaining</th></tr>${leaveBalance.map(b=>{let emp=employees.find(e=>e.id===b.employeeId);return `<tr><td>${emp?.name||'Unknown'}</td><td>${b.total}</td><td>${b.used}</td><td><strong>${b.remaining}</strong></td></tr>`;}).join('')}</table>`:'<p>No data</p>';
-        let recent=leaveRequests.slice(-5).reverse(); document.getElementById('recentLeaveContainer').innerHTML=recent.length?`<table class="data-table"><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Status</th></tr>${recent.map(r=>{let emp=employees.find(e=>e.id===r.employeeId);return `<tr><td>${emp?.name||'Unknown'}</td><td>${r.type}</td><td>${r.startDate}→${r.endDate}</td><td>${r.status}</td></tr>`;}).join('')}</table>`:'<p>No recent leaves</p>';
-        document.getElementById('payrollSummaryContainer').innerHTML=currentPayroll.length?`<table class="data-table"><tr><th>Period</th><th>Employees</th><th>Total Net Pay</th><th>Tax</th></tr><tr><td>${getMonthName(now.getMonth())} ${now.getFullYear()}</td><td>${currentPayroll.length}</td><td>ETB ${monthlyTotal.toFixed(2)}</td><td>ETB ${currentPayroll.reduce((s,p)=>s+p.incomeTax,0).toFixed(2)}</td></tr></table>`:'<p>Generate payroll to see summary</p>';
-    }
-    
-    // Event handlers
-    document.getElementById('employeeForm')?.addEventListener('submit',async(e)=>{ e.preventDefault(); let name=document.getElementById('empName').value.trim(), hireDate=document.getElementById('hireDate').value, salary=parseFloat(document.getElementById('monthlySalary').value), email=document.getElementById('empEmail').value; if(!name||!hireDate||!salary) return showAlert('Fill required fields','error'); await window.addEmployee(name,hireDate,salary,email); e.target.reset(); });
-    document.getElementById('attendanceForm')?.addEventListener('submit',async(e)=>{ e.preventDefault(); let empId=document.getElementById('attendanceEmployee').value, date=document.getElementById('attendanceDate').value, hours=parseFloat(document.getElementById('overtimeHours').value)||0, minutes=parseFloat(document.getElementById('overtimeMinutes').value)||0, type=document.getElementById('attendanceType').value; if(!empId||!date) return showAlert('Select employee and date','error'); await window.recordAttendance(empId,date,hours,minutes,type); e.target.reset(); document.getElementById('calculatedAmount').value=''; document.getElementById('hourlyRateDisplay').value=''; });
-    document.getElementById('leaveForm')?.addEventListener('submit',async(e)=>{ e.preventDefault(); let empId=document.getElementById('leaveEmployee').value, type=document.getElementById('leaveType').value, start=document.getElementById('leaveStart').value, end=document.getElementById('leaveEnd').value, reason=document.getElementById('leaveReason').value; if(!empId||!start||!end) return showAlert('Fill all fields','error'); await window.submitLeave(empId,type,start,end,reason); e.target.reset(); document.getElementById('calcDays').value='0 days'; });
-    document.getElementById('attendanceEmployee')?.addEventListener('change',()=>{ let emp=employees.find(e=>e.id===document.getElementById('attendanceEmployee').value); if(emp) document.getElementById('hourlyRateDisplay').value=`ETB ${calculateHourlyRate(emp.monthlySalary).toFixed(2)}/hr`; else document.getElementById('hourlyRateDisplay').value=''; calculateAmountPreview(); });
-    function calculateAmountPreview(){ let empId=document.getElementById('attendanceEmployee').value, hours=parseFloat(document.getElementById('overtimeHours').value)||0, minutes=parseFloat(document.getElementById('overtimeMinutes').value)||0, type=document.getElementById('attendanceType').value, emp=employees.find(e=>e.id===empId); if(emp){ let amt=calculateOvertimeAmount(hours,minutes,emp.monthlySalary,type==='late'); document.getElementById('calculatedAmount').value=`ETB ${amt.toFixed(2)}`; } }
-    document.getElementById('overtimeHours')?.addEventListener('input',calculateAmountPreview); document.getElementById('overtimeMinutes')?.addEventListener('input',calculateAmountPreview); document.getElementById('attendanceType')?.addEventListener('change',calculateAmountPreview);
-    document.getElementById('leaveStart')?.addEventListener('change',()=>{ let s=document.getElementById('leaveStart').value, e=document.getElementById('leaveEnd').value; if(s&&e) document.getElementById('calcDays').value=calculateLeaveDays(s,e)+' days'; });
-    document.getElementById('leaveEnd')?.addEventListener('change',()=>{ let s=document.getElementById('leaveStart').value, e=document.getElementById('leaveEnd').value; if(s&&e) document.getElementById('calcDays').value=calculateLeaveDays(s,e)+' days'; });
-    
-    function switchTab(tabName){ document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); document.getElementById(tabName).classList.add('active'); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); let btn=document.querySelector(`.nav-item[data-tab="${tabName}"]`); if(btn) btn.classList.add('active'); }
-    document.querySelectorAll('.nav-item').forEach(btn=>{ btn.onclick=()=>switchTab(btn.getAttribute('data-tab')); });
-    document.getElementById('logoutBtn').onclick=()=>{ isAuthenticated=false; document.getElementById('authContainer').classList.remove('hidden'); document.getElementById('appContainer').classList.add('hidden'); };
-    
-    // Authentication flow fixed
-    function initGisClient(){ tokenClient=google.accounts.oauth2.initTokenClient({client_id:CONFIG.CLIENT_ID,scope:CONFIG.SCOPES,callback:async(tokenResponse)=>{ if(tokenResponse.access_token){ gapi.client.setToken({access_token:tokenResponse.access_token}); isAuthenticated=true; document.getElementById('authContainer').classList.add('hidden'); document.getElementById('appContainer').classList.remove('hidden'); await loadAllData(); switchTab('dashboard'); showAlert('Connected to Google Sheets','success'); }else{ document.getElementById('errorMessage').innerText='Auth failed, try again.'; } }}); }
-    async function initGapi(){ await gapi.client.init({apiKey:CONFIG.API_KEY,discoveryDocs:['https://sheets.googleapis.com/$discovery/rest?version=v4']}); initGisClient(); }
-    document.getElementById('googleSignInBtn').onclick=()=>{ if(tokenClient) tokenClient.requestAccessToken(); else setTimeout(()=>{ if(tokenClient) tokenClient.requestAccessToken(); },800); };
-    gapi.load('client',initGapi);
-</script>
+        function calculateOvertimeAmount(hours, minutes, monthlySalary, isLate = false) {
+            let totalHours = hours + (minutes / 60);
+            let hourlyRate = calculateHourlyRate(monthlySalary);
+            let amount = totalHours * hourlyRate;
+            return isLate ? -amount : amount;
+        }
+
+        function calculateEthiopianTax(taxableIncome) {
+            if (taxableIncome <= 2000) return 0;
+            if (taxableIncome <= 4000) return (taxableIncome * 0.15) - 300;
+            if (taxableIncome <= 7000) return (taxableIncome * 0.20) - 500;
+            if (taxableIncome <= 10000) return (taxableIncome * 0.25) - 850;
+            if (taxableIncome <= 14000) return (taxableIncome * 0.30) - 1350;
+            return (taxableIncome * 0.35) - 2050;
+        }
+
+        function calculateLeaveDays(start, end) {
+            let days = 0;
+            let d = new Date(start);
+            let e = new Date(end);
+            while (d <= e) {
+                let day = d.getDay();
+                if (day !== 0) days += (day === 6) ? 0.5 : 1;
+                d.setDate(d.getDate() + 1);
+            }
+            return days;
+        }
+
+        function getCurrentYearMonth() {
+            let now = new Date();
+            return { year: now.getFullYear(), month: now.getMonth() };
+        }
+
+        function getMonthName(month) {
+            return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][month];
+        }
+
+        // ============ UI FUNCTIONS ============
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            let btn = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
+            if (btn) btn.classList.add('active');
+        }
+
+        function showAlert(msg, type) {
+            const container = document.getElementById('alertContainer');
+            const div = document.createElement('div');
+            div.className = `alert alert-${type}`;
+            div.textContent = msg;
+            container.appendChild(div);
+            setTimeout(() => div.remove(), 5000);
+        }
+
+        function updateDateDisplay() {
+            let now = new Date();
+            document.getElementById('currentDate').innerHTML = `${getMonthName(now.getMonth())} ${now.getFullYear()}`;
+            document.getElementById('currentMonthDisplay').innerHTML = `${getMonthName(now.getMonth())} ${now.getFullYear()}`;
+        }
+
+        // ============ GOOGLE SHEETS DATA ============
+        async function loadAllData() {
+            if (!isAuthenticated) return;
+            try {
+                let resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Employees!A:F' });
+                employees = (resp.result.values || []).slice(1).map(r => ({ id: r[0], name: r[1], hireDate: r[2], status: r[3] || 'Active', monthlySalary: parseFloat(r[4]) || 0, email: r[5] || '' }));
+
+                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A:E' });
+                leaveBalance = (resp.result.values || []).slice(1).map(r => ({ employeeId: r[0], total: parseFloat(r[1])||16, used: parseFloat(r[2])||0, remaining: parseFloat(r[3])||16 }));
+
+                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A:H' });
+                leaveRequests = (resp.result.values || []).slice(1).map(r => ({ id: r[0], employeeId: r[1], type: r[2], startDate: r[3], endDate: r[4], days: parseFloat(r[5])||0, status: r[6]||'Pending', reason: r[7] }));
+
+                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Attendance!A:G' });
+                attendanceRecords = (resp.result.values || []).slice(1).map(r => ({ id: r[0], employeeId: r[1], date: r[2], hours: parseFloat(r[3])||0, minutes: parseFloat(r[4])||0, type: r[5], amount: parseFloat(r[6])||0 }));
+
+                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A:I' });
+                payrollRecords = (resp.result.values || []).slice(1).map(r => ({ id: r[0], employeeId: r[1], year: parseInt(r[2]), month: parseInt(r[3]), basicSalary: parseFloat(r[4])||0, overtimeAmount: parseFloat(r[5])||0, lateDeduction: parseFloat(r[6])||0, incomeTax: parseFloat(r[7])||0, netPay: parseFloat(r[8])||0 }));
+
+                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'ActivityLogs!A:D' });
+                activityLogs = (resp.result.values || []).slice(1).map(r => ({ time: r[0], action: r[1], details: r[2], user: r[3] }));
+
+                updateUI();
+            } catch(e) { console.error(e); showAlert('Error loading data', 'error'); }
+        }
+
+        async function saveAttendance() {
+            let data = [['ID','EmployeeID','Date','Hours','Minutes','Type','Amount']];
+            attendanceRecords.forEach(a => data.push([a.id, a.employeeId, a.date, a.hours, a.minutes, a.type, a.amount]));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Attendance!A:G' });
+            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Attendance!A1', valueInputOption: 'RAW', resource: { values: data } });
+        }
+
+        async function savePayroll() {
+            let data = [['ID','EmployeeID','Year','Month','BasicSalary','OvertimeAmount','LateDeduction','IncomeTax','NetPay']];
+            payrollRecords.forEach(p => data.push([p.id, p.employeeId, p.year, p.month, p.basicSalary, p.overtimeAmount, p.lateDeduction, p.incomeTax, p.netPay]));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A:I' });
+            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A1', valueInputOption: 'RAW', resource: { values: data } });
+        }
+
+        async function logActivity(action, details) {
+            try {
+                await gapi.client.sheets.spreadsheets.values.append({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'ActivityLogs!A:D', valueInputOption: 'RAW', resource: { values: [[new Date().toISOString(), action, details, 'Manager']] } });
+            } catch(e) {}
+        }
+
+        // ============ CRUD OPERATIONS ============
+        window.addEmployee = async function(name, hireDate, salary, email) {
+            let id = 'EMP-' + Date.now();
+            employees.push({ id, name, hireDate, status: 'Active', monthlySalary: salary, email });
+            leaveBalance.push({ employeeId: id, total: 16, used: 0, remaining: 16 });
+            
+            let empData = [['ID','Name','HireDate','Status','MonthlySalary','Email']];
+            employees.forEach(e => empData.push([e.id, e.name, e.hireDate, e.status, e.monthlySalary, e.email || '']));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Employees!A:F' });
+            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Employees!A1', valueInputOption: 'RAW', resource: { values: empData } });
+            
+            let balData = [['EmployeeID','TotalAllotted','Used','Remaining','LastUpdated']];
+            leaveBalance.forEach(b => balData.push([b.employeeId, b.total, b.used, b.remaining, new Date().toISOString()]));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A:E' });
+            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A1', valueInputOption: 'RAW', resource: { values: balData } });
+            
+            await logActivity('Added employee', name);
+            await loadAllData();
+            showAlert(`Employee "${name}" added`, 'success');
+        };
+
+        window.recordAttendance = async function(employeeId, date, hours, minutes, type) {
+            let emp = employees.find(e => e.id === employeeId);
+            if (!emp) return false;
+            let amount = calculateOvertimeAmount(hours, minutes, emp.monthlySalary, type === 'late');
+            let id = 'ATT-' + Date.now();
+            attendanceRecords.push({ id, employeeId, date, hours, minutes, type, amount });
+            await saveAttendance();
+            await logActivity(`Recorded ${type}`, `${emp.name}: ${hours}h ${minutes}m`);
+            await loadAllData();
+            showAlert(`${type === 'overtime' ? 'Overtime' : 'Late hours'} recorded`, 'success');
+            return true;
+        };
+
+        window.submitLeave = async function(empId, type, start, end, reason) {
+            let days = calculateLeaveDays(start, end);
+            let bal = leaveBalance.find(b => b.employeeId === empId);
+            if (type !== 'Sick' && bal && days > bal.remaining) {
+                showAlert(`Insufficient balance: ${bal.remaining} days left`, 'error');
+                return false;
+            }
+            let id = 'REQ-' + Date.now();
+            leaveRequests.push({ id, employeeId: empId, type, startDate: start, endDate: end, days, status: 'Pending', reason });
+            
+            let reqData = [['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']];
+            leaveRequests.forEach(r => reqData.push([r.id, r.employeeId, r.type, r.startDate, r.endDate, r.days, r.status, r.reason]));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A:H' });
+            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A1', valueInputOption: 'RAW', resource: { values: reqData } });
+            
+            let emp = employees.find(e => e.id === empId);
+            await logActivity('Leave submitted', `${emp?.name} - ${days} days`);
+            await loadAllData();
+            showAlert('Leave submitted', 'success');
+            return true;
+        };
+
+        window.approveLeave = async function(id) {
+            let req = leaveRequests.find(r => r.id === id);
+            if (req) {
+                req.status = 'Approved';
+                let bal = leaveBalance.find(b => b.employeeId === req.employeeId);
+                if (bal) { bal.used += req.days; bal.remaining = bal.total - bal.used; }
+                
+                let reqData = [['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']];
+                leaveRequests.forEach(r => reqData.push([r.id, r.employeeId, r.type, r.startDate, r.endDate, r.days, r.status, r.reason]));
+                await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A:H' });
+                await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A1', valueInputOption: 'RAW', resource: { values: reqData } });
+                
+                let balData = [['EmployeeID','TotalAllotted','Used','Remaining','LastUpdated']];
+                leaveBalance.forEach(b => balData.push([b.employeeId, b.total, b.used, b.remaining, new Date().toISOString()]));
+                await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A:E' });
+                await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A1', valueInputOption: 'RAW', resource: { values: balData } });
+                
+                await logActivity('Leave approved', `Request ${id}`);
+                await loadAllData();
+                showAlert('Leave approved', 'success');
+            }
+        };
+
+        window.rejectLeave = async function(id) {
+            let req = leaveRequests.find(r => r.id === id);
+            if (req) {
+                req.status = 'Rejected';
+                let reqData = [['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']];
+                leaveRequests.forEach(r => reqData.push([r.id, r.employeeId, r.type, r.startDate, r.endDate, r.days, r.status, r.reason]));
+                await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A:H' });
+                await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A1', valueInputOption: 'RAW', resource: { values: reqData } });
+                await logActivity('Leave rejected', `Request ${id}`);
+                await loadAllData();
+                showAlert('Leave rejected', 'warning');
+            }
+        };
+
+        // ============ PAYROLL GENERATION ============
+        window.generateMonthlyPayroll = async function() {
+            let now = new Date();
+            let currentYear = now.getFullYear();
+            let currentMonth = now.getMonth();
+            let monthName = getMonthName(currentMonth);
+            
+            let monthlyOvertime = {};
+            let monthlyLate = {};
+            
+            attendanceRecords.forEach(att => {
+                let attDate = new Date(att.date);
+                if (attDate.getFullYear() === currentYear && attDate.getMonth() === currentMonth) {
+                    if (att.type === 'overtime') monthlyOvertime[att.employeeId] = (monthlyOvertime[att.employeeId] || 0) + att.amount;
+                    else if (att.type === 'late') monthlyLate[att.employeeId] = (monthlyLate[att.employeeId] || 0) + Math.abs(att.amount);
+                }
+            });
+            
+            let newPayroll = [];
+            for (let emp of employees) {
+                let overtimeAmt = monthlyOvertime[emp.id] || 0;
+                let lateAmt = monthlyLate[emp.id] || 0;
+                let grossPay = emp.monthlySalary + overtimeAmt - lateAmt;
+                let incomeTax = calculateEthiopianTax(emp.monthlySalary);
+                let netPay = grossPay - incomeTax;
+                let existing = payrollRecords.find(p => p.employeeId === emp.id && p.year === currentYear && p.month === currentMonth);
+                let id = existing ? existing.id : 'PAY-' + Date.now() + '-' + emp.id;
+                newPayroll.push({ id, employeeId: emp.id, year: currentYear, month: currentMonth, basicSalary: emp.monthlySalary, overtimeAmount: overtimeAmt, lateDeduction: lateAmt, incomeTax: incomeTax, netPay: netPay });
+            }
+            
+            payrollRecords = payrollRecords.filter(p => !(p.year === currentYear && p.month === currentMonth));
+            payrollRecords.push(...newPayroll);
+            await savePayroll();
+            await logActivity('Generated monthly payroll', `${monthName} ${currentYear}`);
+            await loadAllData();
+            showAlert(`Payroll generated for ${monthName} ${currentYear}`, 'success');
+        };
+
+        window.exportToExcel = function() {
+            let csv = "ID,Employee Name,Basic Salary,Overtime,Late Deduction,Income Tax,Net Pay\n";
+            payrollRecords.forEach(p => {
+                let emp = employees.find(e => e.id === p.employeeId);
+                csv += `${p.employeeId},${emp?.name || 'Unknown'},${p.basicSalary},${p.overtimeAmount},${p.lateDeduction},${p.incomeTax},${p.netPay}\n`;
+            });
+            let blob = new Blob([csv], { type: 'text/csv' });
+            let link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `payroll_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            showAlert('Exported to CSV', 'success');
+        };
+
+        // ============ UI UPDATE ============
+        function updateUI() {
+            let empSelect = document.getElementById('leaveEmployee');
+            let attSelect = document.getElementById('attendanceEmployee');
+            [empSelect, attSelect].forEach(sel => { if(sel) { sel.innerHTML = '<option value="">Select Employee</option>'; employees.forEach(e => sel.appendChild(new Option(e.name, e.id))); } });
+            
+            document.getElementById('employeeListContainer').innerHTML = employees.length ? '<table class="data-table"><tr><th>Name</th><th>Hire Date</th><th>Monthly Salary</th><th>Hourly Rate</th><th>Status</th></tr>' + employees.map(e => `<tr><td>${e.name}</td><td>${e.hireDate}</td><td>ETB ${e.monthlySalary}</td><td>ETB ${calculateHourlyRate(e.monthlySalary).toFixed(2)}/hr</td><td>${e.status}</td></tr>`).join('') + '</table>' : '<p>No employees</p>';
+            
+            document.getElementById('leaveRequestsContainer').innerHTML = leaveRequests.length ? '<table class="data-table"><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th><th>Actions</th></tr>' + leaveRequests.map(r => { let emp = employees.find(e => e.id === r.employeeId); let actions = r.status === 'Pending' ? `<button onclick="approveLeave('${r.id}')" class="btn btn-success" style="margin-right:5px">Approve</button><button onclick="rejectLeave('${r.id}')" class="btn btn-danger">Reject</button>` : '-'; return `<tr><td>${emp?.name || 'Unknown'}</td><td>${r.type}</td><td>${r.startDate} → ${r.endDate}</td><td>${r.days}</td><td><span class="badge badge-${r.status.toLowerCase()}">${r.status}</span></td><td>${actions}</td></tr>`; }).join('') + '</table>' : '<p>No leave requests</p>';
+            
+            document.getElementById('leaveBalanceContainer').innerHTML = leaveBalance.length ? '<table class="data-table"><tr><th>Employee</th><th>Total Allotted</th><th>Used</th><th>Remaining</th></tr>' + leaveBalance.map(b => { let emp = employees.find(e => e.id === b.employeeId); return `<tr><td>${emp?.name || 'Unknown'}</td><td>${b.total} days</td>
+                        <td>${b.used} days</td>
+                        <td><strong>${b.remaining} days</strong></td>
+                    </tr>`; }).join('') + '</table>' : '<p>No balance data</p>';
+            
+            let now = new Date();
+            let filteredAtt = attendanceRecords.filter(a => { let d = new Date(a.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); });
+            document.getElementById('attendanceRecordsContainer').innerHTML = filteredAtt.length ? '<table class="data-table"><tr><th>Date</th><th>Employee</th><th>Hours</th><th>Minutes</th><th>Type</th><th>Amount (ETB)</th></tr>' + filteredAtt.map(a => { let emp = employees.find(e => e.id === a.employeeId); return `<tr><td>${a.date}</td><td>${emp?.name || 'Unknown'}</td><td>${a.hours}</td><td>${a.minutes}</td><td>${a.type === 'overtime' ? '➕ Overtime' : '⚠️ Late'}</td><td>${a.amount.toFixed(2)}</td></tr>`; }).join('') + '</table>' : '<p>No records for current month</p>';
+            
+            let currentPayroll = payrollRecords.filter(p => p.year === now.getFullYear() && p.month === now.getMonth());
+            document.getElementById('payrollContainer').innerHTML = currentPayroll.length ? '<table class="data-table"><tr><th>Employee</th><th>Basic Salary</th><th>Overtime</th><th>Late Deduction</th><th>Income Tax</th><th>Net Pay</th></table>' + currentPayroll.map(p => { let emp = employees.find(e => e.id === p.employeeId); return `<tr><td>${emp?.name || 'Unknown'}</td><td>ETB ${p.basicSalary}</td>
+                        <td>ETB ${p.overtimeAmount}</td>
+                        <td>ETB ${p.lateDeduction}</td>
+                        <td>ETB ${p.incomeTax}</td>
+                        <td><strong>ETB ${p.netPay}</strong></td>
+                    </tr>`; }).join('') + '</table>' : '<p>No payroll for current month. Click "Generate This Month\'s Payroll"</p>';
+            
+            let recent = leaveRequests.slice(-5).reverse();
+            document.getElementById('recentLeaveContainer').innerHTML = recent.length ? '<table class="data-table"><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Status</th></tr>' + recent.map(r => { let emp = employees.find(e => e.id === r.employeeId); return `<tr><td>${emp?.name || 'Unknown'}</td><td>${r.type}</td>
+                        <td>${r.startDate} → ${r.endDate}</td>
+                        <td>${r.status}</td>
+                    </tr>`; }).join('') + '</table>' : '<p>No recent leave</p>';
+            
+            let totalPayroll = currentPayroll.reduce((s, p) => s + p.netPay, 0);
+            let totalTax = currentPayroll.reduce((s, p) => s + p.incomeTax, 0);
+            document.getElementById('payrollSummaryContainer').innerHTML = currentPayroll.length ? '<table class="data-table"><tr><th>Period</th><th>Employees</th><th>Total Net Pay</th><th>Total Tax</th></tr>' + `<tr><td>${getMonthName(now.getMonth())} ${now.getFullYear()} </td>
+                        <td>${currentPayroll.length}</td>
+                        <td>ETB ${totalPayroll.toFixed(2)}</td>
+                        <td>ETB ${totalTax.toFixed(2)}</td>
+                    </tr>` + '</td>' : '<p>Generate payroll to see summary</p>';
+            
+            document.getElementById('dashboardStats').innerHTML = `<div class="stat-card"><h3>Employees</h3><div class="value">${employees.length}</div></div><div class="stat-card"><h3>Pending Leave</h3><div class="value">${leaveRequests.filter(r => r.status === 'Pending').length}</div></div><div class="stat-card"><h3>Monthly Payroll</h3><div class="value">ETB ${totalPayroll.toFixed(0)}</div></div><div class="stat-card"><h3>Overtime This Month</h3><div class="value">ETB ${filteredAtt.filter(a => a.type === 'overtime').reduce((s, a) => s + a.amount, 0).toFixed(0)}</div></div>`;
+            
+            document.getElementById('logsContainer').innerHTML = activityLogs.length ? '<table class="data-table"><tr><th>Time</th><th>Action</th><th>Details</th></tr>' + activityLogs.slice().reverse().slice(0, 50).map(l => `<tr><td>${new Date(l.time).toLocaleString()} </td>
+                        <td>${l.action}</td>
+                        <td>${l.details}</td>
+                    </tr>`).join('') + '</table>' : '<p>No logs</p>';
+            
+            updateDateDisplay();
+        }
+
+        // ============ FORM HANDLERS ============
+        document.getElementById('attendanceForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let empId = document.getElementById('attendanceEmployee').value;
+            let date = document.getElementById('attendanceDate').value;
+            let hours = parseFloat(document.getElementById('overtimeHours').value) || 0;
+            let minutes = parseFloat(document.getElementById('overtimeMinutes').value) || 0;
+            let type = document.getElementById('attendanceType').value;
+            if (!empId || !date) return showAlert('Select employee and date', 'error');
+            await recordAttendance(empId, date, hours, minutes, type);
+            e.target.reset();
+        });
+
+        document.getElementById('attendanceEmployee')?.addEventListener('change', () => {
+            let empId = document.getElementById('attendanceEmployee').value;
+            let emp = employees.find(e => e.id === empId);
+            if (emp) document.getElementById('hourlyRateDisplay').value = `ETB ${calculateHourlyRate(emp.monthlySalary).toFixed(2)} / hour`;
+            else document.getElementById('hourlyRateDisplay').value = '';
+            let hours = parseFloat(document.getElementById('overtimeHours').value) || 0;
+            let minutes = parseFloat(document.getElementById('overtimeMinutes').value) || 0;
+            let type = document.getElementById('attendanceType').value;
+            if (emp) { let amount = calculateOvertimeAmount(hours, minutes, emp.monthlySalary, type === 'late'); document.getElementById('calculatedAmount').value = `ETB ${amount.toFixed(2)}`; }
+        });
+
+        document.getElementById('overtimeHours')?.addEventListener('input', () => { let empId = document.getElementById('attendanceEmployee').value; let emp = employees.find(e => e.id === empId); if(emp) { let hours = parseFloat(document.getElementById('overtimeHours').value)||0; let minutes = parseFloat(document.getElementById('overtimeMinutes').value)||0; let type = document.getElementById('attendanceType').value; let amount = calculateOvertimeAmount(hours, minutes, emp.monthlySalary, type === 'late'); document.getElementById('calculatedAmount').value = `ETB ${amount.toFixed(2)}`; } });
+        document.getElementById('overtimeMinutes')?.addEventListener('input', () => { let empId = document.getElementById('attendanceEmployee').value; let emp = employees.find(e => e.id === empId); if(emp) { let hours = parseFloat(document.getElementById('overtimeHours').value)||0; let minutes = parseFloat(document.getElementById('overtimeMinutes').value)||0; let type = document.getElementById('attendanceType').value; let amount = calculateOvertimeAmount(hours, minutes, emp.monthlySalary, type === 'late'); document.getElementById('calculatedAmount').value = `ETB ${amount.toFixed(2)}`; } });
+        document.getElementById('attendanceType')?.addEventListener('change', () => { let empId = document.getElementById('attendanceEmployee').value; let emp = employees.find(e => e.id === empId); if(emp) { let hours = parseFloat(document.getElementById('overtimeHours').value)||0; let minutes = parseFloat(document.getElementById('overtimeMinutes').value)||0; let type = document.getElementById('attendanceType').value; let amount = calculateOvertimeAmount(hours, minutes, emp.monthlySalary, type === 'late'); document.getElementById('calculatedAmount').value = `ETB ${amount.toFixed(2)}`; } });
+
+        document.getElementById('employeeForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let name = document.getElementById('empName').value.trim();
+            let hireDate = document.getElementById('hireDate').value;
+            let salary = parseFloat(document.getElementById('monthlySalary').value);
+            let email = document.getElementById('empEmail').value;
+            if (!name || !hireDate || !salary) return showAlert('Fill required fields', 'error');
+            await addEmployee(name, hireDate, salary, email);
+            e.target.reset();
+        });
+
+        document.getElementById('leaveForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let empId = document.getElementById('leaveEmployee').value;
+            let type = document.getElementById('leaveType').value;
+            let start = document.getElementById('leaveStart').value;
+            let end = document.getElementById('leaveEnd').value;
+            let reason = document.getElementById('leaveReason').value;
+            if (!empId || !start || !end) return showAlert('Fill all fields', 'error');
+            await submitLeave(empId, type, start, end, reason);
+            e.target.reset();
+            document.getElementById('calcDays').value = '0 days';
+        });
+
+        document.getElementById('leaveStart')?.addEventListener('change', () => { let s = document.getElementById('leaveStart').value; let e = document.getElementById('leaveEnd').value; if (s && e) document.getElementById('calcDays').value = calculateLeaveDays(s, e) + ' days'; });
+        document.getElementById('leaveEnd')?.addEventListener('change', () => { let s = document.getElementById('leaveStart').value; let e = document.getElementById('leaveEnd').value; if (s && e) document.getElementById('calcDays').value = calculateLeaveDays(s, e) + ' days'; });
+
+        // ============ AUTHENTICATION ============
+        function initializeGapiClient() {
+            return gapi.client.init({ apiKey: CONFIG.API_KEY, discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'] });
+        }
+
+        function initializeGisClient() {
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CONFIG.CLIENT_ID,
+                scope: CONFIG.SCOPES,
+                callback: async (tokenResponse) => {
+                    if (tokenResponse.access_token) {
+                        gapi.client.setToken({ access_token: tokenResponse.access_token });
+                        isAuthenticated = true;
+                        document.getElementById('authContainer').classList.add('hidden');
+                        document.getElementById('appContainer').classList.remove('hidden');
+                        document.querySelectorAll('.nav-item').forEach(btn => { let txt = btn.innerText.toLowerCase().split(' ')[0]; if(txt === '📊') txt='dashboard'; else if(txt === '👥') txt='employees'; else if(txt === '⏱️') txt='attendance'; else if(txt === '📝') txt='leave-requests'; else if(txt === '⚖️') txt='leave-balance'; else if(txt === '💰') txt='payroll'; else if(txt === '📜') txt='logs'; btn.setAttribute('data-tab', txt); });
+                        document.querySelectorAll('.nav-item').forEach(btn => btn.onclick = () => switchTab(btn.getAttribute('data-tab')));
+                        await loadAllData();
+                        switchTab('dashboard');
+                        showAlert('Connected to Google Sheets', 'success');
+                    } else { document.getElementById('errorMessage').innerText = 'Authentication failed. Please try again.'; }
+                },
+            });
+        }
+
+        document.getElementById('loginBtn')?.onclick = () => { if(tokenClient) tokenClient.requestAccessToken(); else { document.getElementById('errorMessage').innerText = 'Initializing, please wait...'; setTimeout(() => { if(tokenClient) tokenClient.requestAccessToken(); }, 1000); } };
+        document.getElementById('logoutBtn')?.onclick = () => { isAuthenticated = false; document.getElementById('authContainer').classList.remove('hidden'); document.getElementById('appContainer').classList.add('hidden'); };
+
+        gapi.load('client', async () => { await initializeGapiClient(); initializeGisClient(); });
+    </script>
 </body>
 </html>
