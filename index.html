@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Management System | Ethiopian Calendar + Payroll</title>
+    <title>HR Management System | Payroll + Leave</title>
     <style>
         * {
             margin: 0;
@@ -24,7 +24,6 @@
             --text-secondary: #495057;
             --text-muted: #6c757d;
             --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
 
         body {
@@ -42,7 +41,7 @@
         }
 
         .sidebar {
-            width: 280px;
+            width: 260px;
             background: var(--surface);
             border-right: 1px solid var(--border);
             display: flex;
@@ -52,18 +51,15 @@
             left: 0;
             top: 0;
             z-index: 10;
-            box-shadow: var(--shadow);
         }
 
         .sidebar-header {
-            padding: 1.75rem 1.5rem;
+            padding: 1.5rem;
             border-bottom: 1px solid var(--border);
-            margin-bottom: 1rem;
         }
 
         .sidebar-header h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
+            font-size: 1.2rem;
             color: var(--primary);
         }
 
@@ -75,14 +71,14 @@
 
         .nav-menu {
             flex: 1;
-            padding: 0 1rem;
+            padding: 1rem;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.75rem 1rem;
+            padding: 0.7rem 1rem;
             margin-bottom: 0.25rem;
             border-radius: 0.5rem;
             color: var(--text-secondary);
@@ -92,9 +88,8 @@
             cursor: pointer;
             font-size: 0.875rem;
             font-weight: 500;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
             text-align: left;
-            font-family: inherit;
         }
 
         .nav-item:hover {
@@ -109,20 +104,16 @@
         }
 
         .sidebar-footer {
-            padding: 1.5rem;
+            padding: 1rem;
             border-top: 1px solid var(--border);
         }
 
         .logout-btn {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0.75rem 0;
+            padding: 0.7rem 1rem;
             background: transparent;
             border: none;
             color: var(--text-secondary);
             font-size: 0.875rem;
-            font-weight: 500;
             cursor: pointer;
             width: 100%;
             text-align: left;
@@ -134,9 +125,9 @@
 
         .main-content {
             flex: 1;
-            margin-left: 280px;
+            margin-left: 260px;
             overflow-y: auto;
-            padding: 2rem;
+            padding: 1.5rem;
             background-color: #f8f9fa;
         }
 
@@ -145,24 +136,21 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
         }
 
         .auth-card {
-            background: var(--surface);
-            padding: 2.5rem;
+            background: white;
+            padding: 2rem;
             border-radius: 0.75rem;
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 420px;
-            width: 90%;
-            border: 1px solid var(--border);
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         .auth-card h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
             color: var(--primary);
+            margin-bottom: 0.5rem;
         }
 
         .btn {
@@ -172,7 +160,6 @@
             font-weight: 500;
             cursor: pointer;
             border: none;
-            font-family: inherit;
         }
 
         .btn-primary {
@@ -197,22 +184,21 @@
         }
 
         .card {
-            background: var(--surface);
+            background: white;
             border-radius: 0.75rem;
             border: 1px solid var(--border);
             margin-bottom: 1.5rem;
             overflow: hidden;
-            box-shadow: var(--shadow);
         }
 
         .card-header {
-            padding: 1.25rem 1.5rem;
+            padding: 1rem 1.5rem;
             border-bottom: 1px solid var(--border);
             background: #fafbfc;
         }
 
         .card-header h2 {
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 600;
         }
 
@@ -221,13 +207,13 @@
         }
 
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.8125rem;
+            margin-bottom: 0.25rem;
+            font-size: 0.75rem;
             font-weight: 500;
             color: var(--text-secondary);
         }
@@ -235,11 +221,10 @@
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 0.625rem 0.875rem;
+            padding: 0.5rem 0.75rem;
             border: 1px solid var(--border);
             border-radius: 0.375rem;
             font-size: 0.875rem;
-            font-family: inherit;
         }
 
         .form-group input:focus,
@@ -274,7 +259,7 @@
 
         .data-table th {
             text-align: left;
-            padding: 0.75rem 0.5rem;
+            padding: 0.6rem 0.5rem;
             font-weight: 600;
             color: var(--text-muted);
             background-color: #fafbfc;
@@ -284,7 +269,7 @@
         }
 
         .data-table td {
-            padding: 0.75rem 0.5rem;
+            padding: 0.6rem 0.5rem;
             color: var(--text-secondary);
             border-bottom: 1px solid var(--border);
         }
@@ -293,20 +278,15 @@
             background-color: #f8f9fa;
         }
 
-        .totals-row {
-            background-color: #e8f5e9;
-            font-weight: 600;
-        }
-
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
         .stat-card {
-            background: var(--surface);
+            background: white;
             border: 1px solid var(--border);
             border-radius: 0.75rem;
             padding: 1rem;
@@ -351,9 +331,9 @@
 
         .badge {
             display: inline-flex;
-            padding: 0.25rem 0.75rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
         }
 
@@ -373,7 +353,7 @@
     <div id="authContainer" class="auth-container">
         <div class="auth-card">
             <h1>HR Management System</h1>
-            <p>Ethiopian Calendar | Leave + Payroll</p>
+            <p>Payroll + Leave Management</p>
             <button id="loginBtn" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Sign in with Google</button>
             <div id="errorMessage" style="margin-top: 1rem; font-size: 0.75rem; color: var(--danger);"></div>
         </div>
@@ -384,12 +364,12 @@
             <aside class="sidebar">
                 <div class="sidebar-header">
                     <h1>HR Management</h1>
-                    <p id="ethiopianDate"></p>
+                    <p id="currentDate"></p>
                 </div>
                 <nav class="nav-menu">
                     <button class="nav-item active" data-tab="dashboard">Dashboard</button>
                     <button class="nav-item" data-tab="employees">Employees</button>
-                    <button class="nav-item" data-tab="attendance">Attendance & Overtime</button>
+                    <button class="nav-item" data-tab="attendance">Overtime & Late</button>
                     <button class="nav-item" data-tab="leave-requests">Leave Requests</button>
                     <button class="nav-item" data-tab="leave-balance">Leave Balance</button>
                     <button class="nav-item" data-tab="payroll">Payroll</button>
@@ -411,7 +391,7 @@
                         <div class="card-body"><div class="table-wrapper" id="recentLeaveContainer"></div></div>
                     </div>
                     <div class="card">
-                        <div class="card-header"><h2>Payroll Summary</h2></div>
+                        <div class="card-header"><h2>Current Month Payroll</h2></div>
                         <div class="card-body"><div class="table-wrapper" id="payrollSummaryContainer"></div></div>
                     </div>
                 </div>
@@ -424,7 +404,7 @@
                             <form id="employeeForm">
                                 <div class="form-row">
                                     <div class="form-group"><label>Full Name *</label><input type="text" id="empName" required></div>
-                                    <div class="form-group"><label>Hire Date (Gregorian)</label><input type="date" id="hireDate" required></div>
+                                    <div class="form-group"><label>Hire Date</label><input type="date" id="hireDate" required></div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group"><label>Monthly Salary (ETB) *</label><input type="number" id="monthlySalary" step="0.01" min="0" required></div>
@@ -449,12 +429,12 @@
                                 <div class="form-group"><label>Employee</label><select id="attendanceEmployee" required></select></div>
                                 <div class="form-row-3">
                                     <div class="form-group"><label>Date</label><input type="date" id="attendanceDate" required></div>
-                                    <div class="form-group"><label>Hours</label><input type="number" id="overtimeHours" step="0.5" min="0" value="0" placeholder="0"></div>
-                                    <div class="form-group"><label>Minutes</label><input type="number" id="overtimeMinutes" step="15" min="0" max="55" value="0" placeholder="0"></div>
+                                    <div class="form-group"><label>Hours</label><input type="number" id="overtimeHours" step="0.5" min="0" value="0"></div>
+                                    <div class="form-group"><label>Minutes</label><input type="number" id="overtimeMinutes" step="15" min="0" max="55" value="0"></div>
                                 </div>
                                 <div class="form-group"><label>Type</label>
                                     <select id="attendanceType">
-                                        <option value="overtime">Overtime (Extra Hours)</option>
+                                        <option value="overtime">Overtime (Extra Pay)</option>
                                         <option value="late">Late Hours (Deduction)</option>
                                     </select>
                                 </div>
@@ -465,7 +445,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header"><h2>Overtime/Late Records - Current Ethiopian Month</h2></div>
+                        <div class="card-header"><h2>Current Month Records</h2></div>
                         <div class="card-body"><div class="table-wrapper" id="attendanceRecordsContainer"></div></div>
                     </div>
                 </div>
@@ -508,11 +488,11 @@
                 <div id="payroll" class="tab-content">
                     <div class="card">
                         <div class="card-header">
-                            <h2>Payroll Register - Ethiopian Month</h2>
-                            <div id="currentEthiopianMonth" style="font-size:0.8rem; color:#2d6a4f;"></div>
+                            <h2>Payroll Register</h2>
+                            <div id="currentMonthDisplay" style="font-size:0.75rem; color:#2d6a4f;"></div>
                         </div>
                         <div class="card-body">
-                            <button onclick="generateMonthlyPayroll()" class="btn btn-primary" style="margin-bottom:15px;">Generate Monthly Payroll</button>
+                            <button onclick="generateMonthlyPayroll()" class="btn btn-primary" style="margin-bottom:15px;">Generate This Month's Payroll</button>
                             <button onclick="exportToExcel()" class="btn btn-success" style="margin-left:10px;">Export to Excel</button>
                             <div class="table-wrapper" id="payrollContainer"></div>
                         </div>
@@ -534,72 +514,26 @@
     <script src="https://accounts.google.com/gsi/client"></script>
 
     <script>
-        // ============ ETHIOPIAN CALENDAR SYSTEM ============
-        // Ethiopian calendar starts from August 29, 1968 (Gregorian) = September 11, 1975 (Ethiopian)
-        function isEthiopianLeapYear(year) {
-            // Ethiopian leap year occurs every 4 years
-            return ((year + 1) % 4 === 0);
-        }
+        // ============ CONFIGURATION ============
+        const CONFIG = {
+            CLIENT_ID: '1058574831034-cb30fi18f3f05937969jksvhipso5hav.apps.googleusercontent.com',
+            API_KEY: 'AIzaSyD4oMaBJeXQy8JCpzqcOAJ9HexNAKCPlyY',
+            SPREADSHEET_ID: '1NnOJFFLbPtuPYbI53dXIKA_KezdnxhCiqsPteuvL1Fc',
+            SCOPES: 'https://www.googleapis.com/auth/spreadsheets'
+        };
 
-        function getEthiopianMonthDays(year, month) {
-            // Month: 0 = Meskerem, 1 = Tikimt, ... 11 = Nehase, 12 = Pagume
-            if (month < 12) {
-                return 30; // All 12 months have 30 days
-            } else if (month === 12) {
-                // Pagume - 5 days normally, 6 days on leap year
-                return isEthiopianLeapYear(year) ? 6 : 5;
-            }
-            return 30;
-        }
+        let tokenClient = null;
+        let isAuthenticated = false;
+        
+        let employees = [];
+        let leaveRequests = [];
+        let leaveBalance = [];
+        let attendanceRecords = [];
+        let payrollRecords = [];
+        let activityLogs = [];
 
-        function gregorianToEthiopian(date) {
-            let g = new Date(date);
-            let gMonth = g.getMonth() + 1;
-            let gDay = g.getDate();
-            let gYear = g.getFullYear();
-            
-            let ethYear = gYear - 8;
-            let ethMonth = 0; // Meskerem
-            let ethDay = 0;
-            
-            let referenceDate = new Date(gYear, 8, 11); // September 11
-            let daysOffset = Math.floor((g - referenceDate) / (1000 * 60 * 60 * 24));
-            
-            ethMonth = 0;
-            while (daysOffset >= getEthiopianMonthDays(ethYear, ethMonth)) {
-                daysOffset -= getEthiopianMonthDays(ethYear, ethMonth);
-                ethMonth++;
-                if (ethMonth === 13) {
-                    ethMonth = 0;
-                    ethYear++;
-                }
-            }
-            ethDay = daysOffset + 1;
-            
-            if (gMonth < 9 || (gMonth === 9 && gDay < 11)) {
-                ethYear--;
-            }
-            
-            return { year: ethYear, month: ethMonth, day: ethDay };
-        }
-
-        function getCurrentEthiopianMonth() {
-            let eth = gregorianToEthiopian(new Date());
-            return { year: eth.year, month: eth.month };
-        }
-
-        function getEthiopianMonthName(month) {
-            const names = [
-                "መስከረም (Meskerem)", "ጥቅምት (Tikimt)", "ህዳር (Hidar)", "ታህሳስ (Tahsas)",
-                "ጥር (Tir)", "የካቲት (Yekatit)", "መጋቢት (Megabit)", "ሚያዝያ (Miazia)",
-                "ግንቦት (Ginbot)", "ሰኔ (Sene)", "ሐምሌ (Hamle)", "ነሐሴ (Nehase)", "ጳጉሜ (Pagume)"
-            ];
-            return names[month] || "Unknown";
-        }
-
-        // ============ PAYROLL CALCULATIONS ============
+        // ============ CALCULATIONS ============
         function calculateHourlyRate(monthlySalary) {
-            // 8 hours per day, 30 days per Ethiopian month
             return monthlySalary / (30 * 8);
         }
 
@@ -607,8 +541,7 @@
             let totalHours = hours + (minutes / 60);
             let hourlyRate = calculateHourlyRate(monthlySalary);
             let amount = totalHours * hourlyRate;
-            if (isLate) amount = -amount; // Late hours reduce pay
-            return amount;
+            return isLate ? -amount : amount;
         }
 
         function calculateEthiopianTax(taxableIncome) {
@@ -632,30 +565,22 @@
             return days;
         }
 
-        // ============ GLOBAL DATA ============
-        const CONFIG = {
-            CLIENT_ID: '1058574831034-cb30fi18f3f05937969jksvhipso5hav.apps.googleusercontent.com',
-            API_KEY: 'AIzaSyD4oMaBJeXQy8JCpzqcOAJ9HexNAKCPlyY',
-            SPREADSHEET_ID: '1NnOJFFLbPtuPYbI53dXIKA_KezdnxhCiqsPteuvL1Fc',
-            SCOPES: 'https://www.googleapis.com/auth/spreadsheets'
-        };
+        function getCurrentYearMonth() {
+            let now = new Date();
+            return { year: now.getFullYear(), month: now.getMonth() };
+        }
 
-        let tokenClient = null;
-        let isAuthenticated = false;
-        
-        let employees = [];
-        let leaveRequests = [];
-        let leaveBalance = [];
-        let attendanceRecords = [];
-        let payrollRecords = [];
-        let activityLogs = [];
+        function getMonthName(month) {
+            return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][month];
+        }
 
         // ============ UI FUNCTIONS ============
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
-            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            let btn = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
+            if (btn) btn.classList.add('active');
         }
 
         function showAlert(msg, type) {
@@ -667,116 +592,143 @@
             setTimeout(() => div.remove(), 5000);
         }
 
-        function updateEthiopianDateDisplay() {
-            let eth = gregorianToEthiopian(new Date());
-            document.getElementById('ethiopianDate').innerHTML = `${getEthiopianMonthName(eth.month)} ${eth.day}, ${eth.year} ዓ.ም.`;
-            let currentMonth = getCurrentEthiopianMonth();
-            document.getElementById('currentEthiopianMonth').innerHTML = `${getEthiopianMonthName(currentMonth.month)} ${currentMonth.year} ዓ.ም.`;
+        function updateDateDisplay() {
+            let now = new Date();
+            document.getElementById('currentDate').innerHTML = `${getMonthName(now.getMonth())} ${now.getFullYear()}`;
+            document.getElementById('currentMonthDisplay').innerHTML = `${getMonthName(now.getMonth())} ${now.getFullYear()}`;
         }
 
-        // ============ GOOGLE SHEETS DATA LOAD ============
+        // ============ GOOGLE SHEETS DATA ============
         async function loadAllData() {
             if (!isAuthenticated) return;
             try {
-                let resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Employees!A:F' });
+                let resp = await gapi.client.sheets.spreadsheets.values.get({ 
+                    spreadsheetId: CONFIG.SPREADSHEET_ID, 
+                    range: 'Employees!A:F' 
+                });
                 employees = (resp.result.values || []).slice(1).map(r => ({ 
                     id: r[0], name: r[1], hireDate: r[2], status: r[3] || 'Active', 
                     monthlySalary: parseFloat(r[4]) || 0, email: r[5] || '' 
                 }));
 
-                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A:E' });
+                resp = await gapi.client.sheets.spreadsheets.values.get({ 
+                    spreadsheetId: CONFIG.SPREADSHEET_ID, 
+                    range: 'LeaveBalance!A:E' 
+                });
                 leaveBalance = (resp.result.values || []).slice(1).map(r => ({ 
-                    employeeId: r[0], total: parseFloat(r[1])||16, used: parseFloat(r[2])||0, remaining: parseFloat(r[3])||16 
+                    employeeId: r[0], total: parseFloat(r[1])||16, used: parseFloat(r[2])||0, 
+                    remaining: parseFloat(r[3])||16 
                 }));
 
-                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A:H' });
+                resp = await gapi.client.sheets.spreadsheets.values.get({ 
+                    spreadsheetId: CONFIG.SPREADSHEET_ID, 
+                    range: 'LeaveRequests!A:H' 
+                });
                 leaveRequests = (resp.result.values || []).slice(1).map(r => ({ 
                     id: r[0], employeeId: r[1], type: r[2], startDate: r[3], endDate: r[4], 
                     days: parseFloat(r[5])||0, status: r[6]||'Pending', reason: r[7] 
                 }));
 
-                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Attendance!A:G' });
+                resp = await gapi.client.sheets.spreadsheets.values.get({ 
+                    spreadsheetId: CONFIG.SPREADSHEET_ID, 
+                    range: 'Attendance!A:G' 
+                });
                 attendanceRecords = (resp.result.values || []).slice(1).map(r => ({ 
                     id: r[0], employeeId: r[1], date: r[2], hours: parseFloat(r[3])||0, 
                     minutes: parseFloat(r[4])||0, type: r[5], amount: parseFloat(r[6])||0 
                 }));
 
-                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A:I' });
+                resp = await gapi.client.sheets.spreadsheets.values.get({ 
+                    spreadsheetId: CONFIG.SPREADSHEET_ID, 
+                    range: 'Payroll!A:I' 
+                });
                 payrollRecords = (resp.result.values || []).slice(1).map(r => ({ 
-                    id: r[0], employeeId: r[1], ethiopianMonth: r[2], ethiopianYear: parseInt(r[3]),
+                    id: r[0], employeeId: r[1], year: parseInt(r[2]), month: parseInt(r[3]),
                     basicSalary: parseFloat(r[4])||0, overtimeAmount: parseFloat(r[5])||0,
-                    lateDeduction: parseFloat(r[6])||0, incomeTax: parseFloat(r[7])||0, netPay: parseFloat(r[8])||0
+                    lateDeduction: parseFloat(r[6])||0, incomeTax: parseFloat(r[7])||0, 
+                    netPay: parseFloat(r[8])||0
                 }));
 
-                resp = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'ActivityLogs!A:D' });
-                activityLogs = (resp.result.values || []).slice(1).map(r => ({ time: r[0], action: r[1], details: r[2], user: r[3] }));
+                resp = await gapi.client.sheets.spreadsheets.values.get({ 
+                    spreadsheetId: CONFIG.SPREADSHEET_ID, 
+                    range: 'ActivityLogs!A:D' 
+                });
+                activityLogs = (resp.result.values || []).slice(1).map(r => ({ 
+                    time: r[0], action: r[1], details: r[2], user: r[3] 
+                }));
 
                 updateUI();
-            } catch(e) { console.error(e); showAlert('Error loading data', 'error'); }
+            } catch(e) { 
+                console.error(e); 
+                showAlert('Error loading data', 'error');
+            }
+        }
+
+        async function saveAttendance() {
+            let data = [['ID','EmployeeID','Date','Hours','Minutes','Type','Amount']];
+            attendanceRecords.forEach(a => data.push([a.id, a.employeeId, a.date, a.hours, a.minutes, a.type, a.amount]));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Attendance!A:G' });
+            await gapi.client.sheets.spreadsheets.values.update({ 
+                spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Attendance!A1', 
+                valueInputOption: 'RAW', resource: { values: data } 
+            });
+        }
+
+        async function savePayroll() {
+            let data = [['ID','EmployeeID','Year','Month','BasicSalary','OvertimeAmount','LateDeduction','IncomeTax','NetPay']];
+            payrollRecords.forEach(p => data.push([p.id, p.employeeId, p.year, p.month, p.basicSalary, p.overtimeAmount, p.lateDeduction, p.incomeTax, p.netPay]));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A:I' });
+            await gapi.client.sheets.spreadsheets.values.update({ 
+                spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A1', 
+                valueInputOption: 'RAW', resource: { values: data } 
+            });
         }
 
         async function logActivity(action, details) {
             try {
                 await gapi.client.sheets.spreadsheets.values.append({
-                    spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'ActivityLogs!A:D', valueInputOption: 'RAW',
+                    spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'ActivityLogs!A:D', 
+                    valueInputOption: 'RAW',
                     resource: { values: [[new Date().toISOString(), action, details, 'Manager']] }
                 });
             } catch(e) {}
-            await loadAllData();
         }
 
-        // ============ EMPLOYEE FUNCTIONS ============
+        // ============ CRUD OPERATIONS ============
         window.addEmployee = async function(name, hireDate, salary, email) {
             let id = 'EMP-' + Date.now();
             employees.push({ id, name, hireDate, status: 'Active', monthlySalary: salary, email });
             leaveBalance.push({ employeeId: id, total: 16, used: 0, remaining: 16 });
             
-            await saveEmployees();
-            await saveLeaveBalance();
+            let empData = [['ID','Name','HireDate','Status','MonthlySalary','Email']];
+            employees.forEach(e => empData.push([e.id, e.name, e.hireDate, e.status, e.monthlySalary, e.email || '']));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Employees!A:F' });
+            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Employees!A1', valueInputOption: 'RAW', resource: { values: empData } });
+            
+            let balData = [['EmployeeID','TotalAllotted','Used','Remaining','LastUpdated']];
+            leaveBalance.forEach(b => balData.push([b.employeeId, b.total, b.used, b.remaining, new Date().toISOString()]));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A:E' });
+            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A1', valueInputOption: 'RAW', resource: { values: balData } });
+            
             await logActivity('Added employee', name);
             await loadAllData();
             showAlert(`Employee "${name}" added`, 'success');
         };
 
-        async function saveEmployees() {
-            let data = [['ID','Name','HireDate','Status','MonthlySalary','Email']];
-            employees.forEach(e => data.push([e.id, e.name, e.hireDate, e.status, e.monthlySalary, e.email || '']));
-            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Employees!A:F' });
-            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Employees!A1', valueInputOption: 'RAW', resource: { values: data } });
-        }
-
-        async function saveLeaveBalance() {
-            let data = [['EmployeeID','TotalAllotted','Used','Remaining','LastUpdated']];
-            leaveBalance.forEach(b => data.push([b.employeeId, b.total, b.used, b.remaining, new Date().toISOString()]));
-            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A:E' });
-            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A1', valueInputOption: 'RAW', resource: { values: data } });
-        }
-
-        // ============ ATTENDANCE / OVERTIME ============
         window.recordAttendance = async function(employeeId, date, hours, minutes, type) {
             let emp = employees.find(e => e.id === employeeId);
             if (!emp) return false;
             
-            let totalHours = hours + (minutes / 60);
-            let hourlyRate = calculateHourlyRate(emp.monthlySalary);
-            let amount = totalHours * hourlyRate;
-            if (type === 'late') amount = -amount;
-            
+            let amount = calculateOvertimeAmount(hours, minutes, emp.monthlySalary, type === 'late');
             let id = 'ATT-' + Date.now();
             attendanceRecords.push({ id, employeeId, date, hours, minutes, type, amount });
-            
-            let data = [['ID','EmployeeID','Date','Hours','Minutes','Type','Amount']];
-            attendanceRecords.forEach(a => data.push([a.id, a.employeeId, a.date, a.hours, a.minutes, a.type, a.amount]));
-            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Attendance!A:G' });
-            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Attendance!A1', valueInputOption: 'RAW', resource: { values: data } });
-            
-            await logActivity(`Recorded ${type}`, `${emp.name}: ${totalHours} hours, ${amount.toFixed(2)} ETB`);
+            await saveAttendance();
+            await logActivity(`Recorded ${type}`, `${emp.name}: ${hours}h ${minutes}m`);
             await loadAllData();
             showAlert(`${type === 'overtime' ? 'Overtime' : 'Late hours'} recorded`, 'success');
             return true;
         };
 
-        // ============ LEAVE FUNCTIONS ============
         window.submitLeave = async function(empId, type, start, end, reason) {
             let days = calculateLeaveDays(start, end);
             let bal = leaveBalance.find(b => b.employeeId === empId);
@@ -784,26 +736,20 @@
                 showAlert(`Insufficient balance: ${bal.remaining} days left`, 'error');
                 return false;
             }
-            let emp = employees.find(e => e.id === empId);
-            if (emp && emp.hireDate && (Date.now() - new Date(emp.hireDate).getTime()) / 86400000 < 60 && type !== 'Sick') {
-                showAlert('Employee needs 60 days tenure', 'error');
-                return false;
-            }
             let id = 'REQ-' + Date.now();
             leaveRequests.push({ id, employeeId: empId, type, startDate: start, endDate: end, days, status: 'Pending', reason });
-            await saveLeaveRequests();
+            
+            let reqData = [['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']];
+            leaveRequests.forEach(r => reqData.push([r.id, r.employeeId, r.type, r.startDate, r.endDate, r.days, r.status, r.reason]));
+            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A:H' });
+            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A1', valueInputOption: 'RAW', resource: { values: reqData } });
+            
+            let emp = employees.find(e => e.id === empId);
             await logActivity('Leave submitted', `${emp?.name} - ${days} days`);
             await loadAllData();
             showAlert('Leave submitted', 'success');
             return true;
         };
-
-        async function saveLeaveRequests() {
-            let data = [['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']];
-            leaveRequests.forEach(r => data.push([r.id, r.employeeId, r.type, r.startDate, r.endDate, r.days, r.status, r.reason]));
-            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A:H' });
-            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A1', valueInputOption: 'RAW', resource: { values: data } });
-        }
 
         window.approveLeave = async function(id) {
             let req = leaveRequests.find(r => r.id === id);
@@ -811,8 +757,17 @@
                 req.status = 'Approved';
                 let bal = leaveBalance.find(b => b.employeeId === req.employeeId);
                 if (bal) { bal.used += req.days; bal.remaining = bal.total - bal.used; }
-                await saveLeaveRequests();
-                await saveLeaveBalance();
+                
+                let reqData = [['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']];
+                leaveRequests.forEach(r => reqData.push([r.id, r.employeeId, r.type, r.startDate, r.endDate, r.days, r.status, r.reason]));
+                await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A:H' });
+                await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A1', valueInputOption: 'RAW', resource: { values: reqData } });
+                
+                let balData = [['EmployeeID','TotalAllotted','Used','Remaining','LastUpdated']];
+                leaveBalance.forEach(b => balData.push([b.employeeId, b.total, b.used, b.remaining, new Date().toISOString()]));
+                await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A:E' });
+                await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveBalance!A1', valueInputOption: 'RAW', resource: { values: balData } });
+                
                 await logActivity('Leave approved', `Request ${id}`);
                 await loadAllData();
                 showAlert('Leave approved', 'success');
@@ -823,29 +778,30 @@
             let req = leaveRequests.find(r => r.id === id);
             if (req) {
                 req.status = 'Rejected';
-                await saveLeaveRequests();
+                let reqData = [['ID','EmployeeID','Type','StartDate','EndDate','Days','Status','Reason']];
+                leaveRequests.forEach(r => reqData.push([r.id, r.employeeId, r.type, r.startDate, r.endDate, r.days, r.status, r.reason]));
+                await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A:H' });
+                await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'LeaveRequests!A1', valueInputOption: 'RAW', resource: { values: reqData } });
                 await logActivity('Leave rejected', `Request ${id}`);
                 await loadAllData();
                 showAlert('Leave rejected', 'warning');
             }
         };
 
-        // ============ PAYROLL FUNCTIONS ============
+        // ============ PAYROLL GENERATION (Gregorian Month) ============
         window.generateMonthlyPayroll = async function() {
-            let currentMonth = getCurrentEthiopianMonth();
-            let monthName = getEthiopianMonthName(currentMonth.month);
+            let now = new Date();
+            let currentYear = now.getFullYear();
+            let currentMonth = now.getMonth();
+            let monthName = getMonthName(currentMonth);
             
-            // Filter attendance for this Ethiopian month
-            let monthStart = new Date();
-            let monthEnd = new Date();
-            // Simplified: use current date range
+            // Calculate monthly totals for each employee
             let monthlyOvertime = {};
             let monthlyLate = {};
             
             attendanceRecords.forEach(att => {
                 let attDate = new Date(att.date);
-                let emp = employees.find(e => e.id === att.employeeId);
-                if (emp && attDate.getMonth() === new Date().getMonth()) {
+                if (attDate.getFullYear() === currentYear && attDate.getMonth() === currentMonth) {
                     if (att.type === 'overtime') {
                         monthlyOvertime[att.employeeId] = (monthlyOvertime[att.employeeId] || 0) + att.amount;
                     } else if (att.type === 'late') {
@@ -859,38 +815,33 @@
                 let overtimeAmt = monthlyOvertime[emp.id] || 0;
                 let lateAmt = monthlyLate[emp.id] || 0;
                 let grossPay = emp.monthlySalary + overtimeAmt - lateAmt;
-                let taxableIncome = emp.monthlySalary; // Simplified
+                let taxableIncome = emp.monthlySalary;
                 let incomeTax = calculateEthiopianTax(taxableIncome);
                 let netPay = grossPay - incomeTax;
                 
-                let existing = payrollRecords.find(p => p.employeeId === emp.id && p.ethiopianMonth === currentMonth.month && p.ethiopianYear === currentMonth.year);
+                let existing = payrollRecords.find(p => p.employeeId === emp.id && p.year === currentYear && p.month === currentMonth);
                 let id = existing ? existing.id : 'PAY-' + Date.now() + '-' + emp.id;
                 
                 newPayroll.push({
-                    id, employeeId: emp.id, ethiopianMonth: currentMonth.month, ethiopianYear: currentMonth.year,
+                    id, employeeId: emp.id, year: currentYear, month: currentMonth,
                     basicSalary: emp.monthlySalary, overtimeAmount: overtimeAmt, lateDeduction: lateAmt,
                     incomeTax: incomeTax, netPay: netPay
                 });
             }
             
-            payrollRecords = payrollRecords.filter(p => !(p.ethiopianMonth === currentMonth.month && p.ethiopianYear === currentMonth.year));
+            payrollRecords = payrollRecords.filter(p => !(p.year === currentYear && p.month === currentMonth));
             payrollRecords.push(...newPayroll);
-            
-            let data = [['ID','EmployeeID','EthiopianMonth','EthiopianYear','BasicSalary','OvertimeAmount','LateDeduction','IncomeTax','NetPay']];
-            payrollRecords.forEach(p => data.push([p.id, p.employeeId, p.ethiopianMonth, p.ethiopianYear, p.basicSalary, p.overtimeAmount, p.lateDeduction, p.incomeTax, p.netPay]));
-            await gapi.client.sheets.spreadsheets.values.clear({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A:I' });
-            await gapi.client.sheets.spreadsheets.values.update({ spreadsheetId: CONFIG.SPREADSHEET_ID, range: 'Payroll!A1', valueInputOption: 'RAW', resource: { values: data } });
-            
-            await logActivity('Generated monthly payroll', `${monthName}`);
+            await savePayroll();
+            await logActivity('Generated monthly payroll', `${monthName} ${currentYear}`);
             await loadAllData();
-            showAlert(`Payroll generated for ${monthName}`, 'success');
+            showAlert(`Payroll generated for ${monthName} ${currentYear}`, 'success');
         };
 
         window.exportToExcel = function() {
-            let csv = "Employee,Basic Salary,Overtime,Late Deduction,Income Tax,Net Pay\n";
+            let csv = "Employee ID,Employee Name,Basic Salary,Overtime,Late Deduction,Income Tax,Net Pay\n";
             payrollRecords.forEach(p => {
                 let emp = employees.find(e => e.id === p.employeeId);
-                csv += `${emp?.name || 'Unknown'},${p.basicSalary},${p.overtimeAmount},${p.lateDeduction},${p.incomeTax},${p.netPay}\n`;
+                csv += `${p.employeeId},${emp?.name || 'Unknown'},${p.basicSalary},${p.overtimeAmount},${p.lateDeduction},${p.incomeTax},${p.netPay}\n`;
             });
             let blob = new Blob([csv], { type: 'text/csv' });
             let link = document.createElement('a');
@@ -905,7 +856,6 @@
             // Update dropdowns
             let empSelect = document.getElementById('leaveEmployee');
             let attSelect = document.getElementById('attendanceEmployee');
-            let payrollSelect = document.getElementById('payrollEmployee'); // kept for compatibility
             
             [empSelect, attSelect].forEach(sel => {
                 if (sel) {
@@ -934,28 +884,30 @@
                 '<table class="data-table"><tr><th>Employee</th><th>Total Allotted</th><th>Used</th><th>Remaining</th></tr>' +
                 leaveBalance.map(b => {
                     let emp = employees.find(e => e.id === b.employeeId);
-                    return `<tr><td>${emp?.name || 'Unknown'}</td><td>${b.total} days</td><td>${b.used} days</td><td>${b.remaining} days</td></tr>`;
+                    return `<tr><td>${emp?.name || 'Unknown'}</td><td>${b.total} days</td><td>${b.used} days</td><td><strong>${b.remaining} days</strong></td></tr>`;
                 }).join('') + '</table>' : '<p>No balance data</p>';
             
             // Attendance Records (current month)
-            let currentMonth = new Date().getMonth();
-            let filteredAtt = attendanceRecords.filter(a => new Date(a.date).getMonth() === currentMonth);
+            let now = new Date();
+            let filteredAtt = attendanceRecords.filter(a => {
+                let d = new Date(a.date);
+                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+            });
             document.getElementById('attendanceRecordsContainer').innerHTML = filteredAtt.length ?
                 '<table class="data-table"><tr><th>Date</th><th>Employee</th><th>Hours</th><th>Minutes</th><th>Type</th><th>Amount (ETB)</th></tr>' +
                 filteredAtt.map(a => {
                     let emp = employees.find(e => e.id === a.employeeId);
                     return `<tr><td>${a.date}</td><td>${emp?.name || 'Unknown'}</td><td>${a.hours}</td><td>${a.minutes}</td><td>${a.type === 'overtime' ? '➕ Overtime' : '⚠️ Late'}</td><td>${a.amount.toFixed(2)}</td></tr>`;
-                }).join('') + '</table>' : '<p>No records for current Ethiopian month</p>';
+                }).join('') + '</table>' : '<p>No records for current month</p>';
             
-            // Payroll
-            let currentEthMonth = getCurrentEthiopianMonth();
-            let currentPayroll = payrollRecords.filter(p => p.ethiopianMonth === currentEthMonth.month && p.ethiopianYear === currentEthMonth.year);
+            // Payroll (current month)
+            let currentPayroll = payrollRecords.filter(p => p.year === now.getFullYear() && p.month === now.getMonth());
             document.getElementById('payrollContainer').innerHTML = currentPayroll.length ?
                 '<table class="data-table"><tr><th>Employee</th><th>Basic Salary</th><th>Overtime</th><th>Late Deduction</th><th>Income Tax</th><th>Net Pay</th></tr>' +
                 currentPayroll.map(p => {
                     let emp = employees.find(e => e.id === p.employeeId);
                     return `<tr><td>${emp?.name || 'Unknown'}</td><td>ETB ${p.basicSalary}</td><td>ETB ${p.overtimeAmount}</td><td>ETB ${p.lateDeduction}</td><td>ETB ${p.incomeTax}</td><td><strong>ETB ${p.netPay}</strong></td></tr>`;
-                }).join('') + '</table>' : '<p>No payroll for current Ethiopian month. Click "Generate Monthly Payroll"</p>';
+                }).join('') + '</table>' : '<p>No payroll for current month. Click "Generate This Month\'s Payroll"</p>';
             
             // Recent Leave
             let recent = leaveRequests.slice(-5).reverse();
@@ -967,20 +919,20 @@
                 }).join('') + '</table>' : '<p>No recent leave</p>';
             
             // Payroll Summary Dashboard
-            let currentPay = payrollRecords.filter(p => p.ethiopianMonth === currentEthMonth.month);
-            let totalPayroll = currentPay.reduce((s, p) => s + p.netPay, 0);
-            let totalTax = currentPay.reduce((s, p) => s + p.incomeTax, 0);
-            document.getElementById('payrollSummaryContainer').innerHTML = currentPay.length ?
-                '<table class="data-table"><tr><th>Period</th><th>Total Employees</th><th>Total Net Pay</th><th>Total Tax</th></tr>' +
-                `<tr><td>${getEthiopianMonthName(currentEthMonth.month)} ${currentEthMonth.year}</td><td>${currentPay.length}</td><td>ETB ${totalPayroll.toFixed(2)}</td><td>ETB ${totalTax.toFixed(2)}</td></tr></table>` :
-                '<p>No payroll data for current month</p>';
+            let totalPayroll = currentPayroll.reduce((s, p) => s + p.netPay, 0);
+            let totalTax = currentPayroll.reduce((s, p) => s + p.incomeTax, 0);
+            document.getElementById('payrollSummaryContainer').innerHTML = currentPayroll.length ?
+                '<table class="data-table"><tr><th>Period</th><th>Employees</th><th>Total Net Pay</th><th>Total Tax</th></tr>' +
+                `<tr><td>${getMonthName(now.getMonth())} ${now.getFullYear()}</td><td>${currentPayroll.length}</td><td>ETB ${totalPayroll.toFixed(2)}</td><td>ETB ${totalTax.toFixed(2)}</td></tr></table>` :
+                '<p>Generate payroll to see summary</p>';
             
             // Dashboard Stats
+            let monthlyTotal = currentPayroll.reduce((s, p) => s + p.netPay, 0);
             document.getElementById('dashboardStats').innerHTML = `
                 <div class="stat-card"><h3>Employees</h3><div class="value">${employees.length}</div></div>
                 <div class="stat-card"><h3>Pending Leave</h3><div class="value">${leaveRequests.filter(r => r.status === 'Pending').length}</div></div>
-                <div class="stat-card"><h3>Monthly Payroll</h3><div class="value">ETB ${totalPayroll.toFixed(2)}</div></div>
-                <div class="stat-card"><h3>Overtime This Month</h3><div class="value">ETB ${attendanceRecords.filter(a => a.type === 'overtime').reduce((s, a) => s + a.amount, 0).toFixed(2)}</div></div>`;
+                <div class="stat-card"><h3>Monthly Payroll</h3><div class="value">ETB ${monthlyTotal.toFixed(0)}</div></div>
+                <div class="stat-card"><h3>Overtime This Month</h3><div class="value">ETB ${filteredAtt.filter(a => a.type === 'overtime').reduce((s, a) => s + a.amount, 0).toFixed(0)}</div></div>`;
             
             // Logs
             document.getElementById('logsContainer').innerHTML = activityLogs.length ?
@@ -988,10 +940,10 @@
                 activityLogs.slice().reverse().slice(0, 50).map(l => `<tr><td>${new Date(l.time).toLocaleString()}</td><td>${l.action}</td><td>${l.details}</td></tr>`).join('') + '</table>' :
                 '<p>No logs</p>';
             
-            updateEthiopianDateDisplay();
+            updateDateDisplay();
         }
 
-        // ============ ATTENDANCE FORM HANDLER ============
+        // ============ ATTENDANCE FORM HANDLERS ============
         document.getElementById('attendanceForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             let empId = document.getElementById('attendanceEmployee').value;
@@ -1006,7 +958,6 @@
             document.getElementById('hourlyRateDisplay').value = '';
         });
 
-        // Update hourly rate display when employee changes
         document.getElementById('attendanceEmployee')?.addEventListener('change', () => {
             let empId = document.getElementById('attendanceEmployee').value;
             let emp = employees.find(e => e.id === empId);
@@ -1072,12 +1023,16 @@
 
         // ============ AUTHENTICATION ============
         function initializeGapiClient() {
-            return gapi.client.init({ apiKey: CONFIG.API_KEY, discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'] });
+            return gapi.client.init({ 
+                apiKey: CONFIG.API_KEY, 
+                discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'] 
+            });
         }
 
         function initializeGisClient() {
             tokenClient = google.accounts.oauth2.initTokenClient({
-                client_id: CONFIG.CLIENT_ID, scope: CONFIG.SCOPES,
+                client_id: CONFIG.CLIENT_ID,
+                scope: CONFIG.SCOPES,
                 callback: async (tokenResponse) => {
                     if (tokenResponse.access_token) {
                         gapi.client.setToken({ access_token: tokenResponse.access_token });
@@ -1092,19 +1047,34 @@
                         await loadAllData();
                         switchTab('dashboard');
                         showAlert('Connected to Google Sheets', 'success');
+                    } else {
+                        document.getElementById('errorMessage').innerText = 'Authentication failed. Please try again.';
                     }
-                }
+                },
             });
         }
 
-        document.getElementById('loginBtn')?.onclick = () => tokenClient?.requestAccessToken();
+        document.getElementById('loginBtn')?.onclick = () => {
+            if (tokenClient) {
+                tokenClient.requestAccessToken();
+            } else {
+                document.getElementById('errorMessage').innerText = 'Initializing, please wait...';
+                setTimeout(() => {
+                    if (tokenClient) tokenClient.requestAccessToken();
+                }, 1000);
+            }
+        };
+
         document.getElementById('logoutBtn')?.onclick = () => {
             isAuthenticated = false;
             document.getElementById('authContainer').classList.remove('hidden');
             document.getElementById('appContainer').classList.add('hidden');
         };
 
-        gapi.load('client', async () => { await initializeGapiClient(); initializeGisClient(); });
+        gapi.load('client', async () => { 
+            await initializeGapiClient(); 
+            initializeGisClient(); 
+        });
     </script>
 </body>
 </html>
